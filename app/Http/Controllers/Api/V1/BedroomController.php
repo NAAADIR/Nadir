@@ -46,6 +46,7 @@ class BedroomController extends Controller
      */
     public function show($id)
     {
+        return Bedroom::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -57,7 +58,9 @@ class BedroomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bedroom = Bedroom::find($request->id);
+        $bedroom->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

@@ -46,7 +46,7 @@ class BedroomTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        return BedroomType::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -58,7 +58,9 @@ class BedroomTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bedroomType = BedroomType::find($request->id);
+        $bedroomType->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

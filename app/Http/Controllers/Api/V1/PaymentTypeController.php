@@ -46,7 +46,7 @@ class PaymentTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        return PaymentType::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -58,7 +58,9 @@ class PaymentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $paymentType = PaymentType::find($request->id);
+        $paymentType->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

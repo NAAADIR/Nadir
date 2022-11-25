@@ -47,7 +47,7 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+        return Booking::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -59,7 +59,9 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $booking = Booking::find($request->id);
+        $booking->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

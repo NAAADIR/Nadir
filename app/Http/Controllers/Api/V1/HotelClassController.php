@@ -46,7 +46,7 @@ class HotelClassController extends Controller
      */
     public function show($id)
     {
-        //
+        return HotelClass::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -58,7 +58,9 @@ class HotelClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $hotelClass = HotelClass::find($request->id);
+        $hotelClass->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

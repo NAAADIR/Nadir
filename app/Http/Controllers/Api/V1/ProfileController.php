@@ -46,7 +46,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        return Profile::where('id', 'LIKE', $id)->get();
     }
 
     /**

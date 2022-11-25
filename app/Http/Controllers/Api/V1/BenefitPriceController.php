@@ -46,7 +46,7 @@ class BenefitPriceController extends Controller
      */
     public function show($id)
     {
-        //
+        return BenefitPrice::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -58,7 +58,9 @@ class BenefitPriceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $benefitPrice = BenefitPrice::find($request->id);
+        $benefitPrice->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

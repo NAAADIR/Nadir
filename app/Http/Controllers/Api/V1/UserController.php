@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::orderByDesc('created_at')->get();
     }
 
     /**
@@ -25,7 +26,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (User::create($request->all())) {
+            return response()->json([
+                'success' => 'Créé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**
@@ -36,7 +46,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -48,7 +58,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($request->id);
+        $user->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**

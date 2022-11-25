@@ -46,7 +46,7 @@ class BenefitController extends Controller
      */
     public function show($id)
     {
-        //
+        return Benefit::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -58,7 +58,9 @@ class BenefitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $benefit = Benefit::find($request->id);
+        $benefit->fill($request->input())->save();
+        return redirect()->back();
     }
 
     /**
