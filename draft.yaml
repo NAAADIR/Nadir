@@ -1,0 +1,108 @@
+models:
+  Bedroom:
+    name: string nullable
+    phone_bedroom: string nullable
+    price: decimal:5,2 nullable
+    image: string nullable
+    bedroom_type_id: id foreign
+    hotel_id: id foreign
+    relationships:
+      hasMany: Benefit
+      belongstoMany: Booking
+
+  BedroomType:
+    name: string nullable
+    description: string nullable
+    relationships:
+      hasMany: Bedroom
+
+  Benefit:
+    name: string nullable
+    start_at: dateTime nullable
+    end_at: dateTime nullable
+    duration: dateTime nullable
+    image: string nullable
+    bedroom_id: id foreign
+    benefit_price_id: id foreign
+    user_id: id foreign
+
+  BenefitPrice:
+    name: string nullable
+    description: string nullable
+    price: decimal:5,2 nullable
+    relationships: 
+      hasMany: Benefit
+
+  Booking:
+    start_at: date nullable
+    end_at: date nullable
+    payment_date: date nullable
+    amount: decimal:5,2 nullable
+    user_id: id foreign
+    payment_id: id foreign
+    relationships:
+      belongstoMany: Bedroom
+
+  Hotel:
+    name: string nullable
+    street: string nullable
+    postcode: string nullable
+    phone: string nullable
+    image: string nullable
+    hotel_class_id: id foreign
+    relationships:
+      hasMany: Bedroom
+
+  HotelClass:
+    star_rating: string nullable
+    description: string nullable
+    relationships:
+      hasMany: Hotel
+
+  Payment:
+    creditCardName: string
+    creditCardNumber: string
+    creditCardExpirationDate: date
+    cvv: integer
+    start_at: dateTime
+    end_at: dateTime
+    payment_type_id: id foreign 
+    relationships:
+      hasMany: Booking
+
+  PaymentType:
+    name: string
+    code: string
+    relationships:
+      hasMany: Payment
+
+controllers:
+  Bedroom:
+    resource: api
+  BedroomType:
+    resource: api
+  Benefit:
+    resource: api
+  BenefitPrice:
+    resource: api
+  Booking: 
+    resource: api
+  Hotel:
+    resource: api
+  HotelClass:
+    resource: api
+  Payment:
+    resource: api
+  PaymentType: 
+    resource: api
+
+seeders:
+  Bedroom,
+  BedroomType,
+  Benefit,
+  BenefitPrice,
+  Booking,
+  Hotel,
+  HotelClass,
+  Payment,
+  PaymentType
