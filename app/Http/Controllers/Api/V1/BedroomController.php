@@ -46,7 +46,8 @@ class BedroomController extends Controller
      */
     public function show($id)
     {
-        return Bedroom::where('id', 'LIKE', $id)->get();
+        $bedroom = Bedroom::findOrFail($id);
+        return $bedroom;
     }
 
     /**
@@ -59,8 +60,16 @@ class BedroomController extends Controller
     public function update(Request $request, $id)
     {
         $bedroom = Bedroom::find($request->id);
-        $bedroom->fill($request->input())->save();
-        return redirect()->back();
+        if ($bedroom->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**
@@ -71,6 +80,16 @@ class BedroomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bedroom = Bedroom::findOrFail($id);
+        if ($bedroom->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }
