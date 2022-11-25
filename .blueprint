@@ -17,16 +17,16 @@ created:
     - database/factories/HotelClassFactory.php
     - database/factories/PaymentFactory.php
     - database/factories/PaymentTypeFactory.php
-    - database/migrations/2022_11_24_103918_create_bedrooms_table.php
-    - database/migrations/2022_11_24_103919_create_bedroom_types_table.php
-    - database/migrations/2022_11_24_103920_create_benefits_table.php
-    - database/migrations/2022_11_24_103921_create_benefit_prices_table.php
-    - database/migrations/2022_11_24_103922_create_bookings_table.php
-    - database/migrations/2022_11_24_103923_create_hotels_table.php
-    - database/migrations/2022_11_24_103924_create_hotel_classes_table.php
-    - database/migrations/2022_11_24_103925_create_payments_table.php
-    - database/migrations/2022_11_24_103926_create_payment_types_table.php
-    - database/migrations/2022_11_24_103927_create_bedroom_booking_table.php
+    - database/migrations/2022_11_25_095953_create_bedrooms_table.php
+    - database/migrations/2022_11_25_095954_create_bedroom_types_table.php
+    - database/migrations/2022_11_25_095955_create_benefits_table.php
+    - database/migrations/2022_11_25_095956_create_benefit_prices_table.php
+    - database/migrations/2022_11_25_095957_create_bookings_table.php
+    - database/migrations/2022_11_25_095958_create_hotels_table.php
+    - database/migrations/2022_11_25_095959_create_hotel_classes_table.php
+    - database/migrations/2022_11_25_100000_create_payments_table.php
+    - database/migrations/2022_11_25_100001_create_payment_types_table.php
+    - database/migrations/2022_11_25_100002_create_bedroom_booking_table.php
     - app/Models/Bedroom.php
     - app/Models/BedroomType.php
     - app/Models/Benefit.php
@@ -65,7 +65,7 @@ created:
 updated:
     - routes/api.php
 models:
-    User: { last_name: string, first_name: string, address: string, city: string, postcode: string, country: string, phone_mobile: string, email: string, email_verified_at: 'datetime nullable', password: string, is_admin: 'boolean default:1', remember_token: 'string:100 nullable' }
+    User: { name: string, first_name: 'string nullable', address: 'string nullable', city: 'string nullable', postcode: 'string nullable', country: 'string nullable', phone_mobile: 'string nullable', email: string, email_verified_at: 'datetime nullable', password: string, is_admin: 'boolean nullable default:1', remember_token: 'string:100 nullable' }
     Bedroom: { name: 'string nullable', phone_bedroom: 'string nullable', price: 'decimal:5,2 nullable', image: 'string nullable', bedroom_type_id: 'id foreign', hotel_id: 'id foreign', relationships: { hasMany: Benefit, belongstoMany: Booking } }
     BedroomType: { name: 'string nullable', description: 'string nullable', relationships: { hasMany: Bedroom } }
     Benefit: { name: 'string nullable', start_at: 'dateTime nullable', end_at: 'dateTime nullable', duration: 'dateTime nullable', image: 'string nullable', bedroom_id: 'id foreign', benefit_price_id: 'id foreign', user_id: 'id foreign' }
