@@ -46,7 +46,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::where('id', 'LIKE', $id)->get();
+        $user = User::findOrFail($id);
+        return $user;
     }
 
     /**
@@ -59,8 +60,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($request->id);
-        $user->fill($request->input())->save();
-        return redirect()->back();
+        if ($user->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**

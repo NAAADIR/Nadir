@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use App\Models\PaymentType;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,8 @@ class PaymentTypeController extends Controller
      */
     public function show($id)
     {
-        return PaymentType::where('id', 'LIKE', $id)->get();
+        $paymentType = PaymentType::findOrFail($id);
+        return $paymentType;
     }
 
     /**
@@ -59,8 +61,16 @@ class PaymentTypeController extends Controller
     public function update(Request $request, $id)
     {
         $paymentType = PaymentType::find($request->id);
-        $paymentType->fill($request->input())->save();
-        return redirect()->back();
+        if ($paymentType->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**

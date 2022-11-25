@@ -46,7 +46,8 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        return Payment::where('id', 'LIKE', $id)->get();
+        $payment = Payment::findOrFail($id);
+        return $payment;
     }
 
     /**
@@ -59,8 +60,16 @@ class PaymentController extends Controller
     public function update(Request $request, $id)
     {
         $payment = Payment::find($request->id);
-        $payment->fill($request->input())->save();
-        return redirect()->back();
+        if ($payment->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**

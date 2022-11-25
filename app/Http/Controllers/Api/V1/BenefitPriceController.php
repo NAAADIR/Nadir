@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Benefit;
 use App\Models\BenefitPrice;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,8 @@ class BenefitPriceController extends Controller
      */
     public function show($id)
     {
-        return BenefitPrice::where('id', 'LIKE', $id)->get();
+        $benefit = Benefit::findOrFail($id);
+        return $benefit;
     }
 
     /**
@@ -59,8 +61,16 @@ class BenefitPriceController extends Controller
     public function update(Request $request, $id)
     {
         $benefitPrice = BenefitPrice::find($request->id);
-        $benefitPrice->fill($request->input())->save();
-        return redirect()->back();
+        if ($benefitPrice->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**

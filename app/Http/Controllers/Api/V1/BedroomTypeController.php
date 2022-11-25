@@ -46,7 +46,8 @@ class BedroomTypeController extends Controller
      */
     public function show($id)
     {
-        return BedroomType::where('id', 'LIKE', $id)->get();
+        $bedroomType = BedroomType::findOrFail($id);
+        return $bedroomType;
     }
 
     /**
@@ -59,8 +60,16 @@ class BedroomTypeController extends Controller
     public function update(Request $request, $id)
     {
         $bedroomType = BedroomType::find($request->id);
-        $bedroomType->fill($request->input())->save();
-        return redirect()->back();
+        if ($bedroomType->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**
