@@ -28,7 +28,7 @@ class BedroomController extends Controller
     {
         if (Bedroom::create($request->all())) {
             return response()->json([
-                'success' => 'Crée avec succès'
+                'success' => 'Créée avec succès'
             ], 200);
         }
         else{

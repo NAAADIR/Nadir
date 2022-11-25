@@ -28,7 +28,7 @@ class HotelController extends Controller
     {
         if (Hotel::create($request->all())) {
             return response()->json([
-                'success' => 'Crée avec succès'
+                'success' => 'Créé avec succès'
             ], 200);
         }
         else{
