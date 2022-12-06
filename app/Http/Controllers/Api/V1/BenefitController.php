@@ -80,6 +80,16 @@ class BenefitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $benefit = Benefit::findOrFail($id);
+        if ($benefit->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }

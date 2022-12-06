@@ -80,6 +80,16 @@ class BedroomTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bedroomType = BedroomType::findOrFail($id);
+        if ($bedroomType->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }

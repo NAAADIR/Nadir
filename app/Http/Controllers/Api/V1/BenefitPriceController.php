@@ -81,6 +81,16 @@ class BenefitPriceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $benefitPrice = BenefitPrice::findOrFail($id);
+        if ($benefitPrice->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }

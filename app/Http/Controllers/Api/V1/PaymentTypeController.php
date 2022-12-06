@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Payment;
 use App\Models\PaymentType;
 use Illuminate\Http\Request;
 
@@ -81,6 +80,16 @@ class PaymentTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $paymentType = PaymentType::findOrFail($id);
+        if ($paymentType->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }
