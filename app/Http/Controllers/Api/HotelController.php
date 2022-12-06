@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymentType;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 
-class PaymentTypeController extends Controller
+class HotelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class PaymentTypeController extends Controller
      */
     public function index()
     {
-        return PaymentType::orderByDesc('created_at')->get();
+        return Hotel::orderByDesc('created_at')->get();
     }
 
     /**
@@ -26,7 +26,7 @@ class PaymentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        if (PaymentType::create($request->all())) {
+        if (Hotel::create($request->all())) {
             return response()->json([
                 'success' => 'Créé avec succès'
             ], 200);
@@ -46,8 +46,8 @@ class PaymentTypeController extends Controller
      */
     public function show($id)
     {
-        $paymentType = PaymentType::findOrFail($id);
-        return $paymentType;
+        $hotel = Hotel::findOrFail($id);
+        return $hotel;
     }
 
     /**
@@ -59,8 +59,8 @@ class PaymentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $paymentType = PaymentType::find($request->id);
-        if ($paymentType->update($request->all())) {
+        $hotel = Hotel::find($request->id);
+        if ($hotel->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);
@@ -80,16 +80,6 @@ class PaymentTypeController extends Controller
      */
     public function destroy($id)
     {
-        $paymentType = PaymentType::findOrFail($id);
-        if ($paymentType->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        //
     }
 }

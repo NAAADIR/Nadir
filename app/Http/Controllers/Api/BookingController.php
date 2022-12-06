@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hotel;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
-class HotelController extends Controller
+
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class HotelController extends Controller
      */
     public function index()
     {
-        return Hotel::orderByDesc('created_at')->get();
+        return Booking::orderByDesc('created_at')->get();
     }
 
     /**
@@ -26,7 +27,7 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        if (Hotel::create($request->all())) {
+        if (Booking::create($request->all())) {
             return response()->json([
                 'success' => 'Créé avec succès'
             ], 200);
@@ -46,8 +47,8 @@ class HotelController extends Controller
      */
     public function show($id)
     {
-        $hotel = Hotel::findOrFail($id);
-        return $hotel;
+        $booking = Booking::findOrFail($id);
+        return $booking;
     }
 
     /**
@@ -59,8 +60,8 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hotel = Hotel::find($request->id);
-        if ($hotel->update($request->all())) {
+        $booking = Booking::find($request->id);
+        if ($booking->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);

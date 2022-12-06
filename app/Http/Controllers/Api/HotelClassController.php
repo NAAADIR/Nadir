@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Benefit;
+use App\Models\HotelClass;
 use Illuminate\Http\Request;
 
-class BenefitController extends Controller
+class HotelClassController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class BenefitController extends Controller
      */
     public function index()
     {
-        return Benefit::orderByDesc('created_at')->get();
+        return HotelClass::orderByDesc('created_at')->get();
     }
 
     /**
@@ -26,9 +26,9 @@ class BenefitController extends Controller
      */
     public function store(Request $request)
     {
-        if (Benefit::create($request->all())) {
+        if (HotelClass::create($request->all())) {
             return response()->json([
-                'success' => 'Créé avec succès'
+                'success' => 'Créée avec succès'
             ], 200);
         }
         else{
@@ -46,8 +46,8 @@ class BenefitController extends Controller
      */
     public function show($id)
     {
-        $benefit = Benefit::findOrFail($id);
-        return $benefit;
+        $hotelClass = HotelClass::findOrFail($id);
+        return $hotelClass;
     }
 
     /**
@@ -59,8 +59,8 @@ class BenefitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $benefit = Benefit::find($request->id);
-        if ($benefit->update($request->all())) {
+        $hotelClass = HotelClass::find($request->id);
+        if ($hotelClass->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);
@@ -80,8 +80,8 @@ class BenefitController extends Controller
      */
     public function destroy($id)
     {
-        $benefit = Benefit::findOrFail($id);
-        if ($benefit->delete($id)) {
+        $hotelClass = HotelClass::findOrFail($id);
+        if ($hotelClass->delete($id)) {
             return response()->json([
                 'success' => 'Supprimé avec succès'
             ], 200);

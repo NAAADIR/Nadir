@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Benefit;
-use App\Models\BenefitPrice;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
-class BenefitPriceController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class BenefitPriceController extends Controller
      */
     public function index()
     {
-        return BenefitPrice::orderByDesc('created_at')->get();
+        return Profile::orderByDesc('created_at')->get();
     }
 
     /**
@@ -27,7 +26,7 @@ class BenefitPriceController extends Controller
      */
     public function store(Request $request)
     {
-        if (BenefitPrice::create($request->all())) {
+        if (Profile::create($request->all())) {
             return response()->json([
                 'success' => 'Créé avec succès'
             ], 200);
@@ -47,8 +46,7 @@ class BenefitPriceController extends Controller
      */
     public function show($id)
     {
-        $benefit = Benefit::findOrFail($id);
-        return $benefit;
+        return Profile::where('id', 'LIKE', $id)->get();
     }
 
     /**
@@ -60,17 +58,7 @@ class BenefitPriceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $benefitPrice = BenefitPrice::find($request->id);
-        if ($benefitPrice->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        //
     }
 
     /**
@@ -81,16 +69,6 @@ class BenefitPriceController extends Controller
      */
     public function destroy($id)
     {
-        $benefitPrice = BenefitPrice::findOrFail($id);
-        if ($benefitPrice->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        //
     }
 }

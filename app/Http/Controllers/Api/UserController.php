@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bedroom;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class BedroomController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,20 +15,20 @@ class BedroomController extends Controller
      */
     public function index()
     {
-        return Bedroom::orderByDesc('created_at')->get();
+        return User::orderByDesc('created_at')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if (Bedroom::create($request->all())) {
+        if (User::create($request->all())) {
             return response()->json([
-                'success' => 'Créée avec succès'
+                'success' => 'Créé avec succès'
             ], 200);
         }
         else{
@@ -46,8 +46,8 @@ class BedroomController extends Controller
      */
     public function show($id)
     {
-        $bedroom = Bedroom::findOrFail($id);
-        return $bedroom;
+        $user = User::findOrFail($id);
+        return $user;
     }
 
     /**
@@ -59,8 +59,8 @@ class BedroomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $bedroom = Bedroom::find($request->id);
-        if ($bedroom->update($request->all())) {
+        $user = User::find($request->id);
+        if ($user->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);
@@ -80,16 +80,6 @@ class BedroomController extends Controller
      */
     public function destroy($id)
     {
-        $bedroom = Bedroom::findOrFail($id);
-        if ($bedroom->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        //
     }
 }

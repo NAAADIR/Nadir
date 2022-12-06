@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Benefit;
+use App\Models\BenefitPrice;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class BenefitPriceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::orderByDesc('created_at')->get();
+        return BenefitPrice::orderByDesc('created_at')->get();
     }
 
     /**
@@ -26,7 +27,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (User::create($request->all())) {
+        if (BenefitPrice::create($request->all())) {
             return response()->json([
                 'success' => 'Créé avec succès'
             ], 200);
@@ -46,8 +47,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return $user;
+        $benefit = Benefit::findOrFail($id);
+        return $benefit;
     }
 
     /**
@@ -59,8 +60,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($request->id);
-        if ($user->update($request->all())) {
+        $benefitPrice = BenefitPrice::find($request->id);
+        if ($benefitPrice->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);
@@ -80,6 +81,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $benefitPrice = BenefitPrice::findOrFail($id);
+        if ($benefitPrice->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }

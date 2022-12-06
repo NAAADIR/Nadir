@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\HotelClass;
+use App\Models\Bedroom;
 use Illuminate\Http\Request;
 
-class HotelClassController extends Controller
+class BedroomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,18 @@ class HotelClassController extends Controller
      */
     public function index()
     {
-        return HotelClass::orderByDesc('created_at')->get();
+        return Bedroom::orderByDesc('created_at')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function store(Request $request)
     {
-        if (HotelClass::create($request->all())) {
+        if (Bedroom::create($request->all())) {
             return response()->json([
                 'success' => 'Créée avec succès'
             ], 200);
@@ -46,8 +46,8 @@ class HotelClassController extends Controller
      */
     public function show($id)
     {
-        $hotelClass = HotelClass::findOrFail($id);
-        return $hotelClass;
+        $bedroom = Bedroom::findOrFail($id);
+        return $bedroom;
     }
 
     /**
@@ -59,8 +59,8 @@ class HotelClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hotelClass = HotelClass::find($request->id);
-        if ($hotelClass->update($request->all())) {
+        $bedroom = Bedroom::find($request->id);
+        if ($bedroom->update($request->all())) {
             return response()->json([
                 'success' => 'Modifié avec succès'
             ], 200);
@@ -80,8 +80,8 @@ class HotelClassController extends Controller
      */
     public function destroy($id)
     {
-        $hotelClass = HotelClass::findOrFail($id);
-        if ($hotelClass->delete($id)) {
+        $bedroom = Bedroom::findOrFail($id);
+        if ($bedroom->delete($id)) {
             return response()->json([
                 'success' => 'Supprimé avec succès'
             ], 200);

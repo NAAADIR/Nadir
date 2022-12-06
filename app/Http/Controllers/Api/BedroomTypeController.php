@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BedroomType;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
-class ProfileController extends Controller
+class BedroomTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return Profile::orderByDesc('created_at')->get();
+        return BedroomType::orderByDesc('created_at')->get();
     }
 
     /**
@@ -26,7 +26,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        if (Profile::create($request->all())) {
+        if (BedroomType::create($request->all())) {
             return response()->json([
                 'success' => 'Créé avec succès'
             ], 200);
@@ -46,7 +46,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        return Profile::where('id', 'LIKE', $id)->get();
+        $bedroomType = BedroomType::findOrFail($id);
+        return $bedroomType;
     }
 
     /**
@@ -58,7 +59,17 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bedroomType = BedroomType::find($request->id);
+        if ($bedroomType->update($request->all())) {
+            return response()->json([
+                'success' => 'Modifié avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 
     /**
@@ -69,6 +80,16 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bedroomType = BedroomType::findOrFail($id);
+        if ($bedroomType->delete($id)) {
+            return response()->json([
+                'success' => 'Supprimé avec succès'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'
+            ], 200);
+        }
     }
 }
