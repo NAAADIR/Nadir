@@ -28,15 +28,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('bedroom', BedroomController::class);
-Route::apiResource('bedroom-type', BedroomTypeController::class);
-Route::apiResource('benefit', BenefitController::class);
-Route::apiResource('benefit-price', BenefitPriceController::class);
-Route::apiResource('booking', BookingController::class);
-Route::apiResource('hotel', HotelController::class);
+Route::apiResource('bedrooms', BedroomController::class);
+Route::apiResource('bedroom-types', BedroomTypeController::class);
+Route::apiResource('benefits', BenefitController::class);
+Route::apiResource('benefit-prices', BenefitPriceController::class);
+Route::apiResource('bookings', BookingController::class);
+Route::apiResource('hotels', HotelController::class);
 Route::apiResource('hotel-class', HotelClassController::class);
-Route::apiResource('payment', PaymentController::class);
-Route::apiResource('payment-type', PaymentTypeController::class);
+Route::apiResource('payments', PaymentController::class);
+Route::apiResource('payment-types', PaymentTypeController::class);
 
 
 

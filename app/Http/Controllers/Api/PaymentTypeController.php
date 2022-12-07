@@ -28,9 +28,8 @@ class PaymentTypeController extends Controller
     public function index(Request $request): PaymentTypeCollection
     {
         $paymentTypes = QueryBuilder::for(PaymentType::class)
-            ->allowedFilters(['name'])
-            ->allowedIncludes([])
-            ->jsonPaginate();
+            ->allowedFilters(['name']);
+        
 
         return new PaymentTypeCollection($paymentTypes);
     }
