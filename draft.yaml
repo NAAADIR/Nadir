@@ -1,4 +1,26 @@
 models:
+
+  Address: 
+    name: nullable string
+    street: string
+    complement1: nullable 
+    complement2: nullable 
+    postcode:  nullable string 
+    city: nullable string
+    appartment_number: nullable 
+    country_id: id foreign
+    relationships: 
+      hasMany: User
+  
+  Country:
+    name: string
+    code: string:2
+    is_active: nullable boolean default:1
+    priority: nullable integer default:0
+    relationships:
+      hasMany: Address
+
+
   Bedroom:
     name: string nullable
     phone_bedroom: string nullable
@@ -20,7 +42,7 @@ models:
     name: string nullable
     start_at: dateTime nullable
     end_at: dateTime nullable
-    duration: dateTime nullable
+    duration: int nullable
     image: string nullable
     bedroom_id: id foreign
     benefit_price_id: id foreign
@@ -77,6 +99,10 @@ models:
       hasMany: Payment
 
 controllers:
+  Address:
+    resource: api
+  Country:
+    resource: api
   Bedroom:
     resource: api
   BedroomType:

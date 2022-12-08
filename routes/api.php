@@ -23,20 +23,26 @@ use App\Http\Controllers\Api\BenefitPriceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function (){
+    Route::post('register', [\App\Http\Controllers\Api\RegisterController::class, 'register'])->name('register');
+    Route::post('login', [\App\Http\Controllers\Api\RegisterController::class, 'login'])->name('login');
+    
+    
 });
 
+Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
 
-Route::apiResource('bedrooms', BedroomController::class);
-Route::apiResource('bedroom-types', BedroomTypeController::class);
-Route::apiResource('benefits', BenefitController::class);
-Route::apiResource('benefit-prices', BenefitPriceController::class);
-Route::apiResource('bookings', BookingController::class);
-Route::apiResource('hotels', HotelController::class);
-Route::apiResource('hotel-class', HotelClassController::class);
-Route::apiResource('payments', PaymentController::class);
-Route::apiResource('payment-types', PaymentTypeController::class);
-
+    Route::apiResource('bedrooms', BedroomController::class);
+    Route::apiResource('bedroom-types', BedroomTypeController::class);
+    Route::apiResource('benefits', BenefitController::class);
+    Route::apiResource('benefit-prices', BenefitPriceController::class);
+    Route::apiResource('bookings', BookingController::class);
+    Route::apiResource('hotels', HotelController::class);
+    Route::apiResource('hotel-class', HotelClassController::class);
+    Route::apiResource('payments', PaymentController::class);
+    Route::apiResource('payment-types', PaymentTypeController::class);
+    Route::apiResource('address', App\Http\Controllers\AddressController::class);
+    Route::apiResource('country', App\Http\Controllers\CountryController::class);
+});
 
 

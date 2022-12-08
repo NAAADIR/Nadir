@@ -3,6 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Bedroom;
+use App\Models\BedroomType;
+use App\Models\Benefit;
+use App\Models\BenefitPrice;
+use App\Models\Booking;
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +21,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            PaymentTypeSeeder::class,
+            PaymentSeeder::class,
+            UserSeeder::class,
+            CountrySeeder::class,
+            AddressSeeder::class,
+            BenefitPriceSeeder::class,
+            BedroomTypeSeeder::class,
+            HotelClassSeeder::class,
+            HotelSeeder::class,
+            BedroomSeeder::class,
+            BenefitSeeder::class,
+            
+            
+            
+            
+            BookingSeeder::class,
+        ]);
     }
 }

@@ -14,6 +14,8 @@ class BedroomSeeder extends Seeder
      */
     public function run()
     {
-        Bedroom::factory()->count(5)->create();
+        foreach(config('seeders.bedrooms') as $bedroom) {
+            Bedroom::create($bedroom);
+        }
     }
 }

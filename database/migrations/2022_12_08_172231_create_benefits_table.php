@@ -20,7 +20,7 @@ class CreateBenefitsTable extends Migration
             $table->string('name')->nullable();
             $table->dateTime('start_at')->nullable();
             $table->dateTime('end_at')->nullable();
-            $table->dateTime('duration')->nullable();
+            $table->string('duration')->nullable();
             $table->string('image')->nullable();
             $table->foreignId('bedroom_id')->constrained();
             $table->foreignId('benefit_price_id')->constrained();

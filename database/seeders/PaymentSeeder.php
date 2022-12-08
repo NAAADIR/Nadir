@@ -14,6 +14,8 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        Payment::factory()->count(5)->create();
+        foreach(config('seeders.payments') as $payment) {
+            Payment::create($payment);
+        }
     }
 }

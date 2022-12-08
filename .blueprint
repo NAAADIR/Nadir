@@ -1,4 +1,6 @@
 created:
+    - app/Http/Controllers/AddressController.php
+    - app/Http/Controllers/CountryController.php
     - app/Http/Controllers/BedroomController.php
     - app/Http/Controllers/BedroomTypeController.php
     - app/Http/Controllers/BenefitController.php
@@ -8,6 +10,8 @@ created:
     - app/Http/Controllers/HotelClassController.php
     - app/Http/Controllers/PaymentController.php
     - app/Http/Controllers/PaymentTypeController.php
+    - database/factories/AddressFactory.php
+    - database/factories/CountryFactory.php
     - database/factories/BedroomFactory.php
     - database/factories/BedroomTypeFactory.php
     - database/factories/BenefitFactory.php
@@ -17,16 +21,20 @@ created:
     - database/factories/HotelClassFactory.php
     - database/factories/PaymentFactory.php
     - database/factories/PaymentTypeFactory.php
-    - database/migrations/2022_11_25_095953_create_bedrooms_table.php
-    - database/migrations/2022_11_25_095954_create_bedroom_types_table.php
-    - database/migrations/2022_11_25_095955_create_benefits_table.php
-    - database/migrations/2022_11_25_095956_create_benefit_prices_table.php
-    - database/migrations/2022_11_25_095957_create_bookings_table.php
-    - database/migrations/2022_11_25_095958_create_hotels_table.php
-    - database/migrations/2022_11_25_095959_create_hotel_classes_table.php
-    - database/migrations/2022_11_25_100000_create_payments_table.php
-    - database/migrations/2022_11_25_100001_create_payment_types_table.php
-    - database/migrations/2022_11_25_100002_create_bedroom_booking_table.php
+    - database/migrations/2022_12_08_172227_create_addresses_table.php
+    - database/migrations/2022_12_08_172228_create_countries_table.php
+    - database/migrations/2022_12_08_172229_create_bedrooms_table.php
+    - database/migrations/2022_12_08_172230_create_bedroom_types_table.php
+    - database/migrations/2022_12_08_172231_create_benefits_table.php
+    - database/migrations/2022_12_08_172232_create_benefit_prices_table.php
+    - database/migrations/2022_12_08_172233_create_bookings_table.php
+    - database/migrations/2022_12_08_172234_create_hotels_table.php
+    - database/migrations/2022_12_08_172235_create_hotel_classes_table.php
+    - database/migrations/2022_12_08_172236_create_payments_table.php
+    - database/migrations/2022_12_08_172237_create_payment_types_table.php
+    - database/migrations/2022_12_08_172238_create_bedroom_booking_table.php
+    - app/Models/Address.php
+    - app/Models/Country.php
     - app/Models/Bedroom.php
     - app/Models/BedroomType.php
     - app/Models/Benefit.php
@@ -45,6 +53,8 @@ created:
     - database/seeders/HotelClassSeeder.php
     - database/seeders/PaymentSeeder.php
     - database/seeders/PaymentTypeSeeder.php
+    - tests/Feature/Http/Controllers/AddressControllerTest.php
+    - tests/Feature/Http/Controllers/CountryControllerTest.php
     - tests/Feature/Http/Controllers/BedroomControllerTest.php
     - tests/Feature/Http/Controllers/BedroomTypeControllerTest.php
     - tests/Feature/Http/Controllers/BenefitControllerTest.php
@@ -54,6 +64,14 @@ created:
     - tests/Feature/Http/Controllers/HotelClassControllerTest.php
     - tests/Feature/Http/Controllers/PaymentControllerTest.php
     - tests/Feature/Http/Controllers/PaymentTypeControllerTest.php
+    - app/Http/Requests/AddressStoreRequest.php
+    - app/Http/Requests/AddressUpdateRequest.php
+    - app/Http/Requests/CountryStoreRequest.php
+    - app/Http/Requests/CountryUpdateRequest.php
+    - app/Http/Resources/AddressCollection.php
+    - app/Http/Resources/AddressResource.php
+    - app/Http/Resources/CountryCollection.php
+    - app/Http/Resources/CountryResource.php
     - app/Http/Resources/HotelCollection.php
     - app/Http/Resources/HotelResource.php
     - app/Http/Resources/HotelClassCollection.php
@@ -66,9 +84,11 @@ updated:
     - routes/api.php
 models:
     User: { name: string, first_name: 'string nullable', address: 'string nullable', city: 'string nullable', postcode: 'string nullable', country: 'string nullable', phone_mobile: 'string nullable', email: string, email_verified_at: 'datetime nullable', password: string, is_admin: 'boolean nullable default:1', remember_token: 'string:100 nullable' }
+    Address: { name: 'nullable string', street: string, complement1: nullable, complement2: nullable, postcode: 'nullable string', city: 'nullable string', appartment_number: nullable, country_id: 'id foreign', relationships: { hasMany: User } }
+    Country: { name: string, code: 'string:2', is_active: 'nullable boolean default:1', priority: 'nullable integer default:0', relationships: { hasMany: Address } }
     Bedroom: { name: 'string nullable', phone_bedroom: 'string nullable', price: 'decimal:5,2 nullable', image: 'string nullable', bedroom_type_id: 'id foreign', hotel_id: 'id foreign', relationships: { hasMany: Benefit, belongstoMany: Booking } }
     BedroomType: { name: 'string nullable', description: 'string nullable', relationships: { hasMany: Bedroom } }
-    Benefit: { name: 'string nullable', start_at: 'dateTime nullable', end_at: 'dateTime nullable', duration: 'dateTime nullable', image: 'string nullable', bedroom_id: 'id foreign', benefit_price_id: 'id foreign', user_id: 'id foreign' }
+    Benefit: { name: 'string nullable', start_at: 'dateTime nullable', end_at: 'dateTime nullable', duration: 'int nullable', image: 'string nullable', bedroom_id: 'id foreign', benefit_price_id: 'id foreign', user_id: 'id foreign' }
     BenefitPrice: { name: 'string nullable', description: 'string nullable', price: 'decimal:5,2 nullable', relationships: { hasMany: Benefit } }
     Booking: { start_at: 'date nullable', end_at: 'date nullable', payment_date: 'date nullable', amount: 'decimal:5,2 nullable', user_id: 'id foreign', payment_id: 'id foreign', relationships: { belongstoMany: Bedroom } }
     Hotel: { name: 'string nullable', street: 'string nullable', postcode: 'string nullable', phone: 'string nullable', image: 'string nullable', hotel_class_id: 'id foreign', relationships: { hasMany: Bedroom } }

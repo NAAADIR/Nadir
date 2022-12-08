@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentType;
+use App\Models\Address;
 use Illuminate\Database\Seeder;
 
-class PaymentTypeSeeder extends Seeder
+class AddressSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class PaymentTypeSeeder extends Seeder
      */
     public function run()
     {
-        foreach(config('seeders.payment_types') as $payment_type) {
-            PaymentType::create($payment_type);
+        foreach(config('seeders.addresses') as $address) {
+            Address::create($address);
         }
     }
 }

@@ -29,7 +29,7 @@ class BenefitFactory extends Factory
             'name' => $this->faker->name,
             'start_at' => $this->faker->dateTime(),
             'end_at' => $this->faker->dateTime(),
-            'duration' => $this->faker->dateTime(),
+            'duration' => $this->faker->word,
             'image' => $this->faker->word,
             'bedroom_id' => Bedroom::factory(),
             'benefit_price_id' => BenefitPrice::factory(),

@@ -14,6 +14,8 @@ class BenefitPriceSeeder extends Seeder
      */
     public function run()
     {
-        BenefitPrice::factory()->count(5)->create();
+        foreach(config('seeders.benefit_prices') as $benefit_price) {
+            BenefitPrice::create($benefit_price);
+        }
     }
 }

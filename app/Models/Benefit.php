@@ -34,7 +34,6 @@ class Benefit extends Model
         'id' => 'integer',
         'start_at' => 'datetime',
         'end_at' => 'datetime',
-        'duration' => 'datetime',
         'bedroom_id' => 'integer',
         'benefit_price_id' => 'integer',
         'user_id' => 'integer',

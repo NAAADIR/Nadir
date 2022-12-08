@@ -3,10 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,16 +18,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'first_name',
-        'address',
-        'city',
-        'postcode',
-        'country',
+        'lastname',
+        'firstname',
+        'gender',
+        'username',
+        'phone_office',
         'phone_mobile',
+        'position',
         'email',
+        'email_verified_at',
         'password',
-        'is_admin'
+        'image_path',
+        'params',
+        'preferences',
+        'is_admin',
     ];
 
     /**
@@ -46,7 +50,11 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'id' => 'integer',
         'email_verified_at' => 'datetime',
+        'is_notifiable' => 'boolean',
+        'params' => 'array',
+        'preferences' => 'array',
         'is_admin' => 'boolean',
     ];
 
@@ -61,5 +69,10 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }

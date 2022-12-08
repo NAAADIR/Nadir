@@ -14,6 +14,8 @@ class HotelClassSeeder extends Seeder
      */
     public function run()
     {
-        HotelClass::factory()->count(5)->create();
+        foreach(config('seeders.hotel_classes') as $hotel_class) {
+            HotelClass::create($hotel_class);
+        }
     }
 }
