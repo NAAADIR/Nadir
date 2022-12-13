@@ -24,19 +24,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PaymentTypeSeeder::class,
             PaymentSeeder::class,
-            UserSeeder::class,
             CountrySeeder::class,
             AddressSeeder::class,
+            UserSeeder::class,
             BenefitPriceSeeder::class,
             BedroomTypeSeeder::class,
             HotelClassSeeder::class,
             HotelSeeder::class,
             BedroomSeeder::class,
             BenefitSeeder::class,
-            
-            
-            
-            
             BookingSeeder::class,
         ]);
     }

@@ -1,16 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\AddressStoreRequest;
-use App\Http\Requests\AddressUpdateRequest;
-use App\Http\Resources\AddressCollection;
-use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\AddressResource;
+use App\Http\Resources\AddressCollection;
+use App\Http\Requests\AddressStoreRequest;
+use App\Http\Requests\AddressUpdateRequest;
 
 class AddressController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Address::class, 'address');
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return \App\Http\Resources\AddressCollection

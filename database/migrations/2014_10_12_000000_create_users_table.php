@@ -32,6 +32,7 @@ return new class extends Migration
             $table->json('params')->nullable();
             $table->json('preferences')->nullable();
             $table->boolean('is_admin')->nullable()->default(0);
+            $table->foreignId('address_id')->nullable()->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

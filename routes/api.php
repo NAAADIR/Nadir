@@ -2,15 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\HotelController;
-use App\Http\Controllers\Api\BedroomController;
-use App\Http\Controllers\Api\BenefitController;
-use App\Http\Controllers\Api\BookingController;
-use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\Api\HotelClassController;
-use App\Http\Controllers\Api\BedroomTypeController;
-use App\Http\Controllers\Api\PaymentTypeController;
-use App\Http\Controllers\Api\BenefitPriceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,17 +24,17 @@ Route::group(['prefix' => 'v1'], function (){
 
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
 
-    Route::apiResource('bedrooms', BedroomController::class);
-    Route::apiResource('bedroom-types', BedroomTypeController::class);
-    Route::apiResource('benefits', BenefitController::class);
-    Route::apiResource('benefit-prices', BenefitPriceController::class);
-    Route::apiResource('bookings', BookingController::class);
-    Route::apiResource('hotels', HotelController::class);
-    Route::apiResource('hotel-class', HotelClassController::class);
-    Route::apiResource('payments', PaymentController::class);
-    Route::apiResource('payment-types', PaymentTypeController::class);
-    Route::apiResource('address', App\Http\Controllers\AddressController::class);
-    Route::apiResource('country', App\Http\Controllers\CountryController::class);
+    Route::apiResource('bedrooms', App\Http\Controllers\Api\BedroomController::class);
+    Route::apiResource('bedroom-types', App\Http\Controllers\Api\BedroomTypeController::class);
+    Route::apiResource('benefits', App\Http\Controllers\Api\BenefitController::class);
+    Route::apiResource('benefit-prices', App\Http\Controllers\Api\BenefitPriceController::class);
+    Route::apiResource('bookings', App\Http\Controllers\Api\BookingController::class);
+    Route::apiResource('hotels', App\Http\Controllers\Api\HotelController::class);
+    Route::apiResource('hotel-class', App\Http\Controllers\Api\HotelClassController::class);
+    Route::apiResource('payments', App\Http\Controllers\Api\PaymentController::class);
+    Route::apiResource('payment-types', App\Http\Controllers\Api\PaymentTypeController::class);
+    Route::apiResource('addresses', App\Http\Controllers\Api\AddressController::class);
+    Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);
 });
 
 

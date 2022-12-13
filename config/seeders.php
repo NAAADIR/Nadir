@@ -391,6 +391,7 @@ return [
             'params' => '{}',
             'preferences' => '{}',
             'is_admin' => false,
+            'address_id' => 1,
         ],
         [
             'lastname' => 'Dooley',
@@ -408,6 +409,7 @@ return [
             'params' => '{}',
             'preferences' => '{}',
             'is_admin' => false,
+            'address_id' => 2,
         ],
     ],
 ];

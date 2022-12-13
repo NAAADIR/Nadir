@@ -29,6 +29,7 @@ class PaymentTypeController extends Controller
     {
         $paymentTypes = QueryBuilder::for(PaymentType::class)
             ->allowedFilters(['name']);
+
         
 
         return new PaymentTypeCollection($paymentTypes);
