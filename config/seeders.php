@@ -225,6 +225,37 @@ return [
             'appartment_number' => '51',
             'country_id' => 58,
         ],
+        [
+            'name' => '',
+            'street' => '110 Impasse Valteline',
+            'complement1' => '',
+            'complement2' => '',
+            'postcode' => '34000',
+            'city' => 'Montpellier',
+            'appartment_number' => '301',
+            'country_id' => 58,
+        ],
+        [
+            'name' => '',
+            'street' => '15 Rue de Lyon',
+            'complement1' => '',
+            'complement2' => '',
+            'postcode' => '75000',
+            'city' => 'Paris',
+            'appartment_number' => '41',
+            'country_id' => 58,
+        ],
+        [
+            'name' => '',
+            'street' => '2 Rue du General',
+            'complement1' => '',
+            'complement2' => '',
+            'postcode' => '13000',
+            'city' => 'Marseille',
+            'appartment_number' => '51',
+            'country_id' => 58,
+        ],
+
     ],
 
     'bedrooms' => [
@@ -248,13 +279,43 @@ return [
 
     'bedroom_types' => [
         [
-            'name' => 'Chambre simple lit',
+            'name' => 'Chambre simple lit.',
             'description' => '',
         ],
         [
-            'name' => 'Chambre double lit',
-            'description' => '',
-        ],   
+            'name' => 'Chambre Double Deluxe.',
+            'description' => 'Chambre double Deluxe d\'une superficie de 25 m² est équipée d\'une salle de bains privative.
+                Cette chambre double insonorisée dispose de la climatisation et d\'une entrée privée.',
+        ], 
+        [
+            'name' => 'Chambre Double Economique.',
+            'description' => 'Située sur le jardin ou sur le canal, au premier étage ou au rez-de chaussée, ces chambres d\'une superficie de 15 m² sont insonorisée et bien équipée : climatisation et ventilateur, bureau, télé à écran plat, connexion WifI, mini bar, coffre fort, grande penderie, ...
+                La salle de bain privative dispose d\'un grand lavabo, d\'un sèche cheveux, d\'un distributeur de gel douche/shampoing, d\'une douche dans une baignoire traditionnelle, de WC, bidet, ...',
+        ],
+        [
+            'name' => 'Chambre Double Classique.',
+            'description' => 'Chambre double classique d\'une superficie 13 m².
+                Cette chambre dispose d\'une salle de bains privative, d\'une télévision à écran LCD, d\'un téléphone et d\'une connexion Wi-Fi gratuite.',
+        ],
+        [
+            'name' => 'Chambre Double Confort.',
+            'description' => 'Chambre double confort disposant d\'une salle de bains privative.
+                D\'une superficie 13 m², cette chambre double avec vue est insonorisée et dispose d\'une entrée privée.',
+        ],
+        [
+            'name' => 'Chambre lits Jumeaux Classique.',
+            'description' => 'Chambre lits Jumeaux Classique d\'une superficie de 13 m².
+                Cette chambre dispose d\'une salle de bains privative, d\'une télévision à écran LCD, d\'un téléphone et d\'une connexion Wi-Fi gratuite.',
+        ],
+        [
+            'name' => 'Chambre Triple Economique.',
+            'description' => 'Chambre triple Economique, d\'une superficie 13 m², disposant d\'une salle de bains privative.',
+        ],
+        [
+            'name' => 'Chambre Quadruple Familiale.',
+            'description' => 'Chambre quadruple familiale d\'une superficie de 15 m².
+                Cette chambre dispose d\'une salle de bains privative, d\'une télévision à écran LCD, d\'un téléphone et d\'une connexion Wi-Fi gratuite.',
+        ],
     ],
 
     'benefits' => [
@@ -282,34 +343,94 @@ return [
 
     'benefit_prices' => [
         [
-            'name' => 'Prix de la piscine',
+            'name' => 'Bain à remous/jacuzzi',
             'description' => '',
             'price' => '100'
         ],
         [
-            'name' => 'Prix du petit déjeuné',
+            'name' => 'Sauna',
             'description' => '',
             'price' => '70'
-        ],   
+        ],
+        [
+            'name' => 'Hammam',
+            'description' => '',
+            'price' => '70'
+        ],  
+        [
+            'name' => 'Spa et centre de bien-être',
+            'description' => '',
+            'price' => '70'
+        ],  
+        [
+            'name' => 'Spa',
+            'description' => '',
+            'price' => '70'
+        ],  
+        [
+            'name' => 'Centre de remise en forme',
+            'description' => '',
+            'price' => '70'
+        ],  
+        [
+            'name' => 'Piscine intérieure',
+            'description' => '',
+            'price' => '70'
+        ],
+        [
+            'name' => 'Animations en soirée',
+            'description' => '',
+            'price' => '70'
+        ],  
+        [
+            'name' => ' Plage privée',
+            'description' => '',
+            'price' => '70'
+        ]    
     ],
 
     'hotels' => [
         [
             'name' => 'Rose étoilé',
-            'street' => '2 Rue de Lyon',
-            'postcode' => '69000',
-            'phone' => '123456789',
+            'street' => '87, boulevard de Remy',
+            'postcode' => '09458',
+            'phone' => '0918951220',
             'image' => '',
             'hotel_class_id' => 1
         ],
         [
             'name' => 'Hotel des Lumières',
-            'street' => '2 Rue du Général',
-            'postcode' => '69000',
-            'phone' => '123456789',
+            'street' => '3, boulevard de Lacombe',
+            'postcode' => '29205',
+            'phone' => '0784061486',
             'image' => '',
             'hotel_class_id' => 2
-        ],   
+        ],
+        [
+            'name' => 'La Cabane Dorée',
+            'street' => '46, rue Bourgeois',
+            'postcode' => '55755',
+            'phone' => '0999615884',
+            'image' => '',
+            'hotel_class_id' => 3
+        ], 
+        [
+            'name' => 'Du Jour au Lendemain',
+            'street' => '36, rue de Leveque',
+            'postcode' => '90818',
+            'phone' => '0145882669',
+            'image' => '',
+            'hotel_class_id' => 4
+        ], 
+        [
+            'name' => 'Best Western',
+            'street' => '5, rue de Herve',
+            'postcode' => '24965',
+            'phone' => '0375538604',
+            'image' => '',
+            'hotel_class_id' => 5
+        ], 
+
     ],
 
     'hotel_classes' => [
@@ -318,9 +439,21 @@ return [
             'description' => '',
         ],
         [
-            'star_rating' => '***',
+            'star_rating' => '****',
             'description' => '',
         ],   
+        [
+            'star_rating' => '***',
+            'description' => '',
+        ],
+        [
+            'star_rating' => '**',
+            'description' => '',
+        ],
+        [
+            'star_rating' => '*',
+            'description' => '',
+        ]
     ],
 
     'payments' => [
@@ -410,6 +543,60 @@ return [
             'preferences' => '{}',
             'is_admin' => false,
             'address_id' => 2,
+        ],
+        [
+            'lastname' => 'Adèle',
+            'firstname' => 'Salmon',
+            'username' => 'adèle_salmon',
+            'gender' => 'mme',
+            'phone_office' => '0516050732',
+            'phone_mobile' => '0617236985',
+            'position' => '',
+            'email' => 'adèle.salmon@exemple.com',
+            'email_verified_at' => '01/01/2022',
+            'password' => 'ueLw4+T#T_X%jKF>',
+            'remember_token' => 'osF1Cgeja1',
+            'image_path' => '',
+            'params' => '{}',
+            'preferences' => '{}',
+            'is_admin' => false,
+            'address_id' => 3,
+        ],
+        [
+            'lastname' => 'Luce-Aurélie ',
+            'firstname' => 'Vasseur',
+            'username' => 'vasseur69',
+            'gender' => 'mme',
+            'phone_office' => '0169417208',
+            'phone_mobile' => '0165847652',
+            'position' => '',
+            'email' => 'luce.lucer@exemple.com',
+            'email_verified_at' => '01/01/2022',
+            'password' => 'KbEWF%`nI',
+            'remember_token' => 'osF1Cgeja1',
+            'image_path' => '',
+            'params' => '{}',
+            'preferences' => '{}',
+            'is_admin' => false,
+            'address_id' => 4,
+        ],
+        [
+            'lastname' => 'Étienne',
+            'firstname' => 'Ledoux',
+            'username' => 'ledoucouc',
+            'gender' => 'mr',
+            'phone_office' => '0338546982',
+            'phone_mobile' => '0614685295',
+            'position' => '',
+            'email' => 'ledoux.etienne@exemple.com',
+            'email_verified_at' => '01/01/2022',
+            'password' => '{>@c]ST`QH`',
+            'remember_token' => 'osF1Cgeja1',
+            'image_path' => '',
+            'params' => '{}',
+            'preferences' => '{}',
+            'is_admin' => false,
+            'address_id' => 5,
         ],
     ],
 ];
