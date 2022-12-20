@@ -18,7 +18,7 @@ class CountryPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -30,7 +30,7 @@ class CountryPolicy
      */
     public function view(User $user, Country $country)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -41,7 +41,7 @@ class CountryPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +53,7 @@ class CountryPolicy
      */
     public function update(User $user, Country $country)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +65,7 @@ class CountryPolicy
      */
     public function delete(User $user, Country $country)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Country  $country
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Country $country)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Country  $country
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Country $country)
-    {
-        //
-    }
 }

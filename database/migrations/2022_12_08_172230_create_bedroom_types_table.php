@@ -18,7 +18,7 @@ class CreateBedroomTypesTable extends Migration
         Schema::create('bedroom_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 

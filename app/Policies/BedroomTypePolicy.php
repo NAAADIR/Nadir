@@ -41,7 +41,7 @@ class BedroomTypePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +53,7 @@ class BedroomTypePolicy
      */
     public function update(User $user, BedroomType $bedroomType)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +65,7 @@ class BedroomTypePolicy
      */
     public function delete(User $user, BedroomType $bedroomType)
     {
-        //
+        return $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\BedroomType  $bedroomType
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, BedroomType $bedroomType)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\BedroomType  $bedroomType
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, BedroomType $bedroomType)
-    {
-        //
-    }
 }

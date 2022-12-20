@@ -34,7 +34,7 @@ models:
 
   BedroomType:
     name: string nullable
-    description: string nullable
+    description: text nullable
     relationships:
       hasMany: Bedroom
 

@@ -18,7 +18,7 @@ class AddressPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -30,7 +30,7 @@ class AddressPolicy
      */
     public function view(User $user, Address $address)
     {
-        if ($user->is_admin === true)
+        if ($user->address_id === $address->id)
         {
             return true;
         }
@@ -44,7 +44,7 @@ class AddressPolicy
      */
     public function create(User $user)
     {
-        return false;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -56,7 +56,7 @@ class AddressPolicy
      */
     public function update(User $user, Address $address)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -68,7 +68,7 @@ class AddressPolicy
      */
     public function delete(User $user, Address $address)
     {
-        return false;
+        return $user->role == 'superadmin';
     }
 
 }

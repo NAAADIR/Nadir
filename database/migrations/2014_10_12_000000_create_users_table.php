@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->json('params')->nullable();
             $table->json('preferences')->nullable();
-            $table->boolean('is_admin')->nullable()->default(0);
-            $table->foreignId('address_id')->nullable()->constrained();
+            $table->enum('role', ['superadmin', 'admin', 'user']);
+            $table->foreignId('address_id')->constrained()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

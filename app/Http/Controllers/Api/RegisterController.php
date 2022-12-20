@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -56,13 +57,22 @@ class RegisterController extends Controller
      * @throws ValidationException
      *
      */
-    public function register(Request $request): UserResource
+    public function register(Request $request) 
     {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        return new UserResource($user);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        $request['password']=Hash::make($request['password']);
+        $request['remember_token'] = Str::random(10);
+        $user = User::create($request->toArray());
+        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $response = ['token' => $token];
+        return response($response, 200);
     }
 
     protected function create(array $data): mixed
@@ -80,31 +90,27 @@ class RegisterController extends Controller
 
     public function login(Request $request)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'email' => 'required|string|email',
         'password' => 'required|string',
     ]);
-
-    $credentials = request(['email', 'password']);
-
-    if (!Auth::attempt($credentials))
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 401);
-    $user = $request->user();
-    $tokenResult = $user->createToken('Personal Access Token');
-    $token = $tokenResult->token;
-    if ($request->remember_me)
-        $token->expires_at = Carbon::now()->addWeeks(1);
-    $token->save();
-    return response()->json([
-        'email' => Auth::user()->email,
-        'password' => Auth::user()->password,
-        'access_token' => $tokenResult->accessToken,
-        'token_type' => 'Bearer',
-        'expires_at' => Carbon::parse(
-            $tokenResult->token->expires_at
-        )->toDateTimeString()
-    ]);
+    if ($validator->fails())
+    {
+        return response(['errors'=>$validator->errors()->all()], 422);
+    }
+    $user = User::where('email', $request->email)->first();
+    if ($user) {
+        if ($request->password == $user->password) {
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = ['token' => $token];
+            return response($response, 200);
+        } else {
+            $response = ["message" => "Password mismatch"];
+            return response($response, 422);
+        }
+    } else {
+        $response = ["message" => 'User does not exist'];
+        return response($response, 422);
+    }
 }
 }

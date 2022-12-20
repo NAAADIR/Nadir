@@ -41,7 +41,7 @@ class HotelPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +53,7 @@ class HotelPolicy
      */
     public function update(User $user, Hotel $hotel)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +65,7 @@ class HotelPolicy
      */
     public function delete(User $user, Hotel $hotel)
     {
-        //
+        return $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Hotel  $hotel
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Hotel $hotel)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Hotel  $hotel
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Hotel $hotel)
-    {
-        //
-    }
 }

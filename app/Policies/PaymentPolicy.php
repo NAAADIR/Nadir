@@ -18,7 +18,7 @@ class PaymentPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -30,7 +30,7 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -41,7 +41,7 @@ class PaymentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +53,7 @@ class PaymentPolicy
      */
     public function update(User $user, Payment $payment)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +65,8 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        //
+        return $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Payment $payment)
-    {
-        //
-    }
+    
 }

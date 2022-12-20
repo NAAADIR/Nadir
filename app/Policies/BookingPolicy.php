@@ -18,7 +18,7 @@ class BookingPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -30,7 +30,10 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        return true;
+        if ($booking->user_id === $user->findId())
+        {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +44,7 @@ class BookingPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +56,7 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +68,7 @@ class BookingPolicy
      */
     public function delete(User $user, Booking $booking)
     {
-        //
+        return $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Booking $booking)
-    {
-        //
-    }
 }

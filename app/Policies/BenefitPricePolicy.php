@@ -41,7 +41,7 @@ class BenefitPricePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -53,7 +53,7 @@ class BenefitPricePolicy
      */
     public function update(User $user, BenefitPrice $benefitPrice)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
     /**
@@ -65,30 +65,7 @@ class BenefitPricePolicy
      */
     public function delete(User $user, BenefitPrice $benefitPrice)
     {
-        //
+        return $user->role == 'admin' or $user->role == 'superadmin';
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\BenefitPrice  $benefitPrice
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, BenefitPrice $benefitPrice)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\BenefitPrice  $benefitPrice
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, BenefitPrice $benefitPrice)
-    {
-        //
-    }
 }
