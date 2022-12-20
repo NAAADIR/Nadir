@@ -2,94 +2,121 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Filters\V1\PaymentsFilter;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\PaymentResource;
+use App\Http\Resources\PaymentCollection;
+use App\Http\Requests\PaymentStoreRequest;
+use App\Http\Requests\PaymentUpdateRequest;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        return Payment::orderByDesc('created_at')->get();
+        $this->authorizeResource(Payment::class, 'address');
+    }
+    /**
+     * Affiche la liste des types de paiements
+     *
+     * @param Request $request
+     * @return PaymentCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\PaymentCollection
+     * @apiResourceModel App\Models\Payment
+     */
+    public function index(Request $request): PaymentCollection
+    {
+        $filter = new PaymentsFilter();
+        $queryItems = $filter->transform($request);
+        $includePaymentTypes = $request->query('includePaymentTypes');
+        $payments = Payment::where($queryItems);
+
+        if ($includePaymentTypes) {
+            $payments = $payments->with('PaymentType');
+        }
+        return new PaymentCollection($payments->paginate()->appends($request->query()));
+        // if (count($queryItems) == 0) {
+        //     return new PaymentCollection(Payment::paginate());
+        // } else {
+        //     return new PaymentCollection(Payment::where($queryItems)->paginate());
+        // }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crée un type de paiement
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PaymentStoreRequest $request
+     * @return JsonResponse|PaymentResource
+     *
      */
-    public function store(Request $request)
+    public function store(PaymentStoreRequest $request): JsonResponse|PaymentResource
     {
-        if (Payment::create($request->all())) {
-            return response()->json([
-                'success' => 'Créé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('create', Payment::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $payment = Payment::create($request->validated());
+
+        return new PaymentResource($payment);
     }
 
     /**
-     * Display the specified resource.
+     * Affiche le détail d’un type de paiement
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Payment $payment
+     * @return PaymentResource
+     *
+     * @apiResource App\Http\Resources\PaymentResource
+     * @apiResourceModel App\Models\Payment
      */
-    public function show($id)
+    public function show(Request $request, Payment $payment): PaymentResource
     {
-        $payment = Payment::findOrFail($id);
-        return $payment;
+        return new PaymentResource($payment);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Modifie un type de paiement
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PaymentUpdateRequest $request
+     * @param Payment $payment
+     * @return JsonResponse|PaymentResource
+     *
      */
-    public function update(Request $request, $id)
+    public function update(PaymentUpdateRequest $request, Payment $payment): JsonResponse|PaymentResource
     {
-        $payment = Payment::find($request->id);
-        if ($payment->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('update', $payment)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $payment->update($request->validated());
+
+        return new PaymentResource($payment);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprime un type de paiement
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Payment $payment
+     * @return JsonResponse|Response
+     *
      */
-    public function destroy($id)
+    public function destroy(Request $request, Payment $payment): Response|JsonResponse
     {
-        $payment = Payment::findOrFail($id);
-        if ($payment->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('delete', $payment)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $payment->delete();
+
+        return response()->noContent();
     }
 }

@@ -18,7 +18,7 @@ class BedroomPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class BedroomPolicy
      */
     public function view(User $user, Bedroom $bedroom)
     {
-        //
+        return true;
     }
 
     /**

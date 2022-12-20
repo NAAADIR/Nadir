@@ -1,67 +1,114 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CountryStoreRequest;
-use App\Http\Requests\CountryUpdateRequest;
-use App\Http\Resources\CountryCollection;
-use App\Http\Resources\CountryResource;
+use App\Filters\V1\CountriesFilter;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\CountryResource;
+use App\Http\Resources\CountryCollection;
+use App\Http\Requests\CountryStoreRequest;
+use App\Http\Requests\CountryUpdateRequest;
 
 class CountryController extends Controller
 {
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Http\Resources\CountryCollection
-     */
-    public function index(Request $request)
-    {
-        $countries = Country::all();
 
-        return new CountryCollection($countries);
+    public function __construct()
+    {
+        $this->authorizeResource(Country::class, 'address');
+    }
+    /**
+     * Affiche la liste des pays
+     *
+     * @param Request $request
+     * @return CountryCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\CountryCollection
+     * @apiResourceModel App\Models\Country
+     */
+    public function index(Request $request): CountryCollection
+    {
+        $filter = new CountriesFilter();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+            return new CountryCollection(Country::paginate());
+        } else {
+            return new CountryCollection(Country::where($queryItems)->paginate());
+        }
     }
 
     /**
-     * @param \App\Http\Requests\CountryStoreRequest $request
-     * @return \App\Http\Resources\CountryResource
+     * Crée un pays
+     *
+     * @param CountryStoreRequest $request
+     * @return JsonResponse|CountryResource
+     *
      */
-    public function store(CountryStoreRequest $request)
+    public function store(CountryStoreRequest $request): JsonResponse|CountryResource
     {
+        /*if (auth()->user()->cannot('create', Country::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
         $country = Country::create($request->validated());
 
         return new CountryResource($country);
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Country $country
-     * @return \App\Http\Resources\CountryResource
+     * Affiche le détail d’un pays
+     *
+     * @param Request $request
+     * @param Country $country
+     * @return CountryResource
+     *
+     * @apiResource App\Http\Resources\CountryResource
+     * @apiResourceModel App\Models\Country
      */
-    public function show(Request $request, Country $country)
+    public function show(Request $request, Country $country): CountryResource
     {
         return new CountryResource($country);
     }
 
     /**
-     * @param \App\Http\Requests\CountryUpdateRequest $request
-     * @param \App\Models\Country $country
-     * @return \App\Http\Resources\CountryResource
+     * Modifie un pays
+     *
+     * @param CountryUpdateRequest $request
+     * @param Country $country
+     * @return JsonResponse|CountryResource
+     *
      */
-    public function update(CountryUpdateRequest $request, Country $country)
+    public function update(CountryUpdateRequest $request, Country $country): JsonResponse|CountryResource
     {
+        /*if (auth()->user()->cannot('update', $country)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
         $country->update($request->validated());
 
         return new CountryResource($country);
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Country $country
-     * @return \Illuminate\Http\Response
+     * Supprime un pays
+     *
+     * @param Request $request
+     * @param Country $country
+     * @return JsonResponse|Response
+     *
      */
-    public function destroy(Request $request, Country $country)
+    public function destroy(Request $request, Country $country): Response|JsonResponse
     {
+        /*if (auth()->user()->cannot('delete', $country)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
         $country->delete();
 
         return response()->noContent();

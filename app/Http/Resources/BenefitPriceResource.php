@@ -18,7 +18,7 @@ class BenefitPriceResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => (float)$this->price,
             'benefits' => BenefitCollection::make($this->whenLoaded('benefits')),
         ];
     }

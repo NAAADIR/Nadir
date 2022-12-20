@@ -2,94 +2,115 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Filters\V1\HotelClassesFilter;
 use App\Models\HotelClass;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\HotelClassResource;
+use App\Http\Resources\HotelClassCollection;
+use App\Http\Requests\HotelClassStoreRequest;
+use App\Http\Requests\HotelClassUpdateRequest;
 
 class HotelClassController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return HotelClass::orderByDesc('created_at')->get();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function __construct()
     {
-        if (HotelClass::create($request->all())) {
-            return response()->json([
-                'success' => 'Créée avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        $this->authorizeResource(HotelClass::class, 'address');
     }
-
     /**
-     * Display the specified resource.
+     * Affiche la liste des classes d'hôtels
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return HotelClassCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\HotelClassCollection
+     * @apiResourceModel App\Models\HotelClass
      */
-    public function show($id)
+    public function index(Request $request): HotelClassCollection
     {
-        $hotelClass = HotelClass::findOrFail($id);
-        return $hotelClass;
-    }
+        $filter = new HotelClassesFilter();
+        $queryItems = $filter->transform($request);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $hotelClass = HotelClass::find($request->id);
-        if ($hotelClass->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
+        if (count($queryItems) == 0) {
+            return new HotelClassCollection(HotelClass::paginate());
+        } else {
+            return new HotelClassCollection(HotelClass::where($queryItems)->paginate());
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Crée une classe d'hôtel
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param HotelClassStoreRequest $request
+     * @return JsonResponse|HotelClassResource
+     *
      */
-    public function destroy($id)
+    public function store(HotelClassStoreRequest $request): JsonResponse|HotelClassResource
     {
-        $hotelClass = HotelClass::findOrFail($id);
-        if ($hotelClass->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('create', HotelClass::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $hotelClass = HotelClass::create($request->validated());
+
+        return new HotelClassResource($hotelClass);
+    }
+
+    /**
+     * Affiche le détail d’une classe d'hôtel
+     *
+     * @param Request $request
+     * @param HotelClass $hotelClass
+     * @return HotelClassResource
+     *
+     * @apiResource App\Http\Resources\HotelClassResource
+     * @apiResourceModel App\Models\HotelClass
+     */
+    public function show(Request $request, HotelClass $hotelClass): HotelClassResource
+    {
+        return new HotelClassResource($hotelClass);
+    }
+
+    /**
+     * Modifie une classe d'hôtel
+     *
+     * @param HotelClassUpdateRequest $request
+     * @param HotelClass $hotelClass
+     * @return JsonResponse|HotelClassResource
+     *
+     */
+    public function update(HotelClassUpdateRequest $request, HotelClass $hotelClass): JsonResponse|HotelClassResource
+    {
+        /*if (auth()->user()->cannot('update', $hotelClass)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $hotelClass->update($request->validated());
+
+        return new HotelClassResource($hotelClass);
+    }
+
+    /**
+     * Supprime une classe d'hôtel
+     *
+     * @param Request $request
+     * @param HotelClass $hotelClass
+     * @return JsonResponse|Response
+     *
+     */
+    public function destroy(Request $request, HotelClass $hotelClass): Response|JsonResponse
+    {
+        /*if (auth()->user()->cannot('delete', $hotelClass)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $hotelClass->delete();
+
+        return response()->noContent();
     }
 }

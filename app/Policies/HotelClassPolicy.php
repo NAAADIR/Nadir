@@ -18,7 +18,7 @@ class HotelClassPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class HotelClassPolicy
      */
     public function view(User $user, HotelClass $hotelClass)
     {
-        //
+        return true;
     }
 
     /**

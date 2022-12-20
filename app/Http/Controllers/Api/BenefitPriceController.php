@@ -2,95 +2,115 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Benefit;
+use App\Filters\V1\BenefitPricesFilter;
 use App\Models\BenefitPrice;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\BenefitPriceResource;
+use App\Http\Resources\BenefitPriceCollection;
+use App\Http\Requests\BenefitPriceStoreRequest;
+use App\Http\Requests\BenefitPriceUpdateRequest;
 
 class BenefitPriceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return BenefitPrice::orderByDesc('created_at')->get();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function __construct()
     {
-        if (BenefitPrice::create($request->all())) {
-            return response()->json([
-                'success' => 'Créé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        $this->authorizeResource(BenefitPrice::class, 'address');
     }
-
     /**
-     * Display the specified resource.
+     * Affiche la liste des prix des bénéfits
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return BenefitPriceCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\BenefitPriceCollection
+     * @apiResourceModel App\Models\BenefitPrice
      */
-    public function show($id)
+    public function index(Request $request): BenefitPriceCollection
     {
-        $benefit = Benefit::findOrFail($id);
-        return $benefit;
-    }
+        $filter = new BenefitPricesFilter();
+        $queryItems = $filter->transform($request);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $benefitPrice = BenefitPrice::find($request->id);
-        if ($benefitPrice->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
+        if (count($queryItems) == 0) {
+            return new BenefitPriceCollection(BenefitPrice::paginate());
+        } else {
+            return new BenefitPriceCollection(BenefitPrice::where($queryItems)->paginate());
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Crée un prix des bénéfits
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param BenefitPriceStoreRequest $request
+     * @return JsonResponse|BenefitPriceResource
+     *
      */
-    public function destroy($id)
+    public function store(BenefitPriceStoreRequest $request): JsonResponse|BenefitPriceResource
     {
-        $benefitPrice = BenefitPrice::findOrFail($id);
-        if ($benefitPrice->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('create', BenefitPrice::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $benefitPrice = BenefitPrice::create($request->validated());
+
+        return new BenefitPriceResource($benefitPrice);
+    }
+
+    /**
+     * Affiche le détail d’un prix des bénéfits
+     *
+     * @param Request $request
+     * @param BenefitPrice $benefitPrice
+     * @return BenefitPriceResource
+     *
+     * @apiResource App\Http\Resources\BenefitPriceResource
+     * @apiResourceModel App\Models\BenefitPrice
+     */
+    public function show(Request $request, BenefitPrice $benefitPrice): BenefitPriceResource
+    {
+        return new BenefitPriceResource($benefitPrice);
+    }
+
+    /**
+     * Modifie un prix des bénéfits
+     *
+     * @param BenefitPriceUpdateRequest $request
+     * @param BenefitPrice $benefitPrice
+     * @return JsonResponse|BenefitPriceResource
+     *
+     */
+    public function update(BenefitPriceUpdateRequest $request, BenefitPrice $benefitPrice): JsonResponse|BenefitPriceResource
+    {
+        /*if (auth()->user()->cannot('update', $benefitPrice)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $benefitPrice->update($request->validated());
+
+        return new BenefitPriceResource($benefitPrice);
+    }
+
+    /**
+     * Supprime un prix des bénéfits
+     *
+     * @param Request $request
+     * @param BenefitPrice $benefitPrice
+     * @return JsonResponse|Response
+     *
+     */
+    public function destroy(Request $request, BenefitPrice $benefitPrice): Response|JsonResponse
+    {
+        /*if (auth()->user()->cannot('delete', $benefitPrice)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $benefitPrice->delete();
+
+        return response()->noContent();
     }
 }

@@ -18,7 +18,7 @@ class PaymentTypePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class PaymentTypePolicy
      */
     public function view(User $user, PaymentType $paymentType)
     {
-        //
+        return true;
     }
 
     /**

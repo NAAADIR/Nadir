@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PaymentResource extends JsonResource
@@ -18,11 +19,12 @@ class PaymentResource extends JsonResource
             'id' => $this->id,
             'creditCardName' => $this->creditCardName,
             'creditCardNumber' => $this->creditCardNumber,
-            'creditCardExpirationDate' => $this->creditCardExpirationDate,
+            'creditCardExpirationDate' => Carbon::createFromDate($this->creditCardExpirationDate)->format('d-m-Y'),
             'cvv' => $this->cvv,
-            'start_at' => $this->start_at,
-            'end_at' => $this->end_at,
+            'start_at' => Carbon::createFromDate($this->start_at)->format('d-m-Y'),
+            'end_at' => Carbon::createFromDate($this->end_at)->format('d-m-Y'),
             'payment_type_id' => $this->payment_type_id,
+            'payment-types' => PaymentTypeResource::collection($this->whenLoaded('payment-types')),
             'bookings' => BookingCollection::make($this->whenLoaded('bookings')),
         ];
     }

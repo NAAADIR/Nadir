@@ -18,7 +18,7 @@ class CountryPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class CountryPolicy
      */
     public function view(User $user, Country $country)
     {
-        //
+        return true;
     }
 
     /**

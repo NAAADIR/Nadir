@@ -2,94 +2,115 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Filters\V1\BedroomTypesFilter;
 use App\Models\BedroomType;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\BedroomTypeResource;
+use App\Http\Resources\BedroomTypeCollection;
+use App\Http\Requests\BedroomTypeStoreRequest;
+use App\Http\Requests\BedroomTypeUpdateRequest;
 
 class BedroomTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return BedroomType::orderByDesc('created_at')->get();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function __construct()
     {
-        if (BedroomType::create($request->all())) {
-            return response()->json([
-                'success' => 'Créé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        $this->authorizeResource(BedroomType::class, 'address');
     }
-
     /**
-     * Display the specified resource.
+     * Affiche la liste des types de chambres
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return BedroomTypeCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\BedroomTypeCollection
+     * @apiResourceModel App\Models\BedroomType
      */
-    public function show($id)
+    public function index(Request $request): BedroomTypeCollection
     {
-        $bedroomType = BedroomType::findOrFail($id);
-        return $bedroomType;
-    }
+        $filter = new BedroomTypesFilter();
+        $queryItems = $filter->transform($request);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $bedroomType = BedroomType::find($request->id);
-        if ($bedroomType->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
+        if (count($queryItems) == 0) {
+            return new BedroomTypeCollection(BedroomType::paginate());
+        } else {
+            return new BedroomTypeCollection(BedroomType::where($queryItems)->paginate());
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Crée un type de chambre
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param BedroomTypeStoreRequest $request
+     * @return JsonResponse|BedroomTypeResource
+     *
      */
-    public function destroy($id)
+    public function store(BedroomTypeStoreRequest $request): JsonResponse|BedroomTypeResource
     {
-        $bedroomType = BedroomType::findOrFail($id);
-        if ($bedroomType->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('create', BedroomType::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $bedroomType = BedroomType::create($request->validated());
+
+        return new BedroomTypeResource($bedroomType);
+    }
+
+    /**
+     * Affiche le détail d’un type de chambre
+     *
+     * @param Request $request
+     * @param BedroomType $bedroomType
+     * @return BedroomTypeResource
+     *
+     * @apiResource App\Http\Resources\BedroomTypeResource
+     * @apiResourceModel App\Models\BedroomType
+     */
+    public function show(Request $request, BedroomType $bedroomType): BedroomTypeResource
+    {
+        return new BedroomTypeResource($bedroomType);
+    }
+
+    /**
+     * Modifie un type de chambre
+     *
+     * @param BedroomTypeUpdateRequest $request
+     * @param BedroomType $bedroomType
+     * @return JsonResponse|BedroomTypeResource
+     *
+     */
+    public function update(BedroomTypeUpdateRequest $request, BedroomType $bedroomType): JsonResponse|BedroomTypeResource
+    {
+        /*if (auth()->user()->cannot('update', $bedroomType)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $bedroomType->update($request->validated());
+
+        return new BedroomTypeResource($bedroomType);
+    }
+
+    /**
+     * Supprime un type de chambre
+     *
+     * @param Request $request
+     * @param BedroomType $bedroomType
+     * @return JsonResponse|Response
+     *
+     */
+    public function destroy(Request $request, BedroomType $bedroomType): Response|JsonResponse
+    {
+        /*if (auth()->user()->cannot('delete', $bedroomType)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $bedroomType->delete();
+
+        return response()->noContent();
     }
 }

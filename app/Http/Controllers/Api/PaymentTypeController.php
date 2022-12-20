@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\V1\PaymentTypesFilter;
 use App\Models\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,6 +16,11 @@ use App\Http\Requests\PaymentTypeUpdateRequest;
 
 class PaymentTypeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(PaymentType::class, 'address');
+    }
     /**
      * Affiche la liste des types de paiements
      *
@@ -27,12 +33,14 @@ class PaymentTypeController extends Controller
      */
     public function index(Request $request): PaymentTypeCollection
     {
-        $paymentTypes = QueryBuilder::for(PaymentType::class)
-            ->allowedFilters(['name']);
+        $filter = new PaymentTypesFilter();
+        $queryItems = $filter->transform($request);
 
-        
-
-        return new PaymentTypeCollection($paymentTypes);
+        if (count($queryItems) == 0) {
+            return new PaymentTypeCollection(PaymentType::paginate());
+        } else {
+            return new PaymentTypeCollection(PaymentType::where($queryItems)->paginate());
+        }
     }
 
     /**

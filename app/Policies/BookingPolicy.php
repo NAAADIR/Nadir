@@ -18,7 +18,7 @@ class BookingPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        //
+        return true;
     }
 
     /**

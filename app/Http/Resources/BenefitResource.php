@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BenefitResource extends JsonResource
@@ -17,8 +18,8 @@ class BenefitResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'start_at' => $this->start_at,
-            'end_at' => $this->end_at,
+            'start_at' => Carbon::createFromDate($this->start_at)->format('d-m-Y'),
+            'end_at' => Carbon::createFromDate($this->end_at)->format('d-m-Y'),
             'duration' => $this->duration,
             'image' => $this->image,
             'bedroom_id' => $this->bedroom_id,

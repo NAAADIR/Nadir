@@ -18,7 +18,7 @@ class BedroomResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'phone_bedroom' => $this->phone_bedroom,
-            'price' => $this->price,
+            'price' => (float)$this->price,
             'image' => $this->image,
             'bedroom_type_id' => $this->bedroom_type_id,
             'hotel_id' => $this->hotel_id,

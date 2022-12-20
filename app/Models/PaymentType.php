@@ -28,7 +28,7 @@ class PaymentType extends Model
         'id' => 'integer',
     ];
 
-    public function payments()
+    public function payment()
     {
         return $this->hasMany(Payment::class);
     }

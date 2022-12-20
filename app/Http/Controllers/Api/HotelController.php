@@ -2,84 +2,115 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Filters\V1\HotelsFilter;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\HotelResource;
+use App\Http\Resources\HotelCollection;
+use App\Http\Requests\HotelStoreRequest;
+use App\Http\Requests\HotelUpdateRequest;
 
 class HotelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return Hotel::orderByDesc('created_at')->get();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function __construct()
     {
-        if (Hotel::create($request->all())) {
-            return response()->json([
-                'success' => 'Créé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
+        $this->authorizeResource(Hotel::class, 'address');
+    }
+    /**
+     * Affiche la liste des hotêls
+     *
+     * @param Request $request
+     * @return HotelCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\HotelCollection
+     * @apiResourceModel App\Models\Hotel
+     */
+    public function index(Request $request): HotelCollection
+    {
+        $filter = new HotelsFilter();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+            return new HotelCollection(Hotel::paginate());
+        } else {
+            return new HotelCollection(Hotel::where($queryItems)->paginate());
         }
     }
 
     /**
-     * Display the specified resource.
+     * Crée un hôtel
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param HotelStoreRequest $request
+     * @return JsonResponse|HotelResource
+     *
      */
-    public function show($id)
+    public function store(HotelStoreRequest $request): JsonResponse|HotelResource
     {
-        $hotel = Hotel::findOrFail($id);
-        return $hotel;
+        /*if (auth()->user()->cannot('create', Hotel::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $hotel = Hotel::create($request->validated());
+
+        return new HotelResource($hotel);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Affiche le détail d’un hôtel
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Hotel $hotel
+     * @return HotelResource
+     *
+     * @apiResource App\Http\Resources\HotelResource
+     * @apiResourceModel App\Models\Hotel
      */
-    public function update(Request $request, $id)
+    public function show(Request $request, Hotel $hotel): HotelResource
     {
-        $hotel = Hotel::find($request->id);
-        if ($hotel->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        return new HotelResource($hotel);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Modifie un hôtel
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param HotelUpdateRequest $request
+     * @param Hotel $hotel
+     * @return JsonResponse|HotelResource
+     *
      */
-    public function destroy($id)
+    public function update(HotelUpdateRequest $request, Hotel $hotel): JsonResponse|HotelResource
     {
-        //
+        /*if (auth()->user()->cannot('update', $hotel)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $hotel->update($request->validated());
+
+        return new HotelResource($hotel);
+    }
+
+    /**
+     * Supprime un hôtel
+     *
+     * @param Request $request
+     * @param Hotel $hotel
+     * @return JsonResponse|Response
+     *
+     */
+    public function destroy(Request $request, Hotel $hotel): Response|JsonResponse
+    {
+        /*if (auth()->user()->cannot('delete', $hotel)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $hotel->delete();
+
+        return response()->noContent();
     }
 }

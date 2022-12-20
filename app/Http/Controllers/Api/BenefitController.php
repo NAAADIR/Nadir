@@ -2,94 +2,115 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Filters\V1\BenefitsFilter;
 use App\Models\Benefit;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\BenefitResource;
+use App\Http\Resources\BenefitCollection;
+use App\Http\Requests\BenefitStoreRequest;
+use App\Http\Requests\BenefitUpdateRequest;
 
 class BenefitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return Benefit::orderByDesc('created_at')->get();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function __construct()
     {
-        if (Benefit::create($request->all())) {
-            return response()->json([
-                'success' => 'Créé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        $this->authorizeResource(Benefit::class, 'address');
     }
-
     /**
-     * Display the specified resource.
+     * Affiche la liste des bénéfit
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return BenefitCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\BenefitCollection
+     * @apiResourceModel App\Models\Benefit
      */
-    public function show($id)
+    public function index(Request $request): BenefitCollection
     {
-        $benefit = Benefit::findOrFail($id);
-        return $benefit;
-    }
+        $filter = new BenefitsFilter();
+        $queryItems = $filter->transform($request);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $benefit = Benefit::find($request->id);
-        if ($benefit->update($request->all())) {
-            return response()->json([
-                'success' => 'Modifié avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
+        if (count($queryItems) == 0) {
+            return new BenefitCollection(Benefit::paginate());
+        } else {
+            return new BenefitCollection(Benefit::where($queryItems)->paginate());
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Crée un benefit
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param BenefitStoreRequest $request
+     * @return JsonResponse|BenefitResource
+     *
      */
-    public function destroy($id)
+    public function store(BenefitStoreRequest $request): JsonResponse|BenefitResource
     {
-        $benefit = Benefit::findOrFail($id);
-        if ($benefit->delete($id)) {
-            return response()->json([
-                'success' => 'Supprimé avec succès'
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'error'
-            ], 200);
-        }
+        /*if (auth()->user()->cannot('create', Benefit::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
+        $benefit = Benefit::create($request->validated());
+
+        return new BenefitResource($benefit);
+    }
+
+    /**
+     * Affiche le détail d’un benefit
+     *
+     * @param Request $request
+     * @param Benefit $benefit
+     * @return BenefitResource
+     *
+     * @apiResource App\Http\Resources\BenefitResource
+     * @apiResourceModel App\Models\Benefit
+     */
+    public function show(Request $request, Benefit $benefit): BenefitResource
+    {
+        return new BenefitResource($benefit);
+    }
+
+    /**
+     * Modifie un benefit
+     *
+     * @param BenefitUpdateRequest $request
+     * @param Benefit $benefit
+     * @return JsonResponse|BenefitResource
+     *
+     */
+    public function update(BenefitUpdateRequest $request, Benefit $benefit): JsonResponse|BenefitResource
+    {
+        /*if (auth()->user()->cannot('update', $benefit)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
+        $benefit->update($request->validated());
+
+        return new BenefitResource($benefit);
+    }
+
+    /**
+     * Supprime un benefit
+     *
+     * @param Request $request
+     * @param Benefit $benefit
+     * @return JsonResponse|Response
+     *
+     */
+    public function destroy(Request $request, Benefit $benefit): Response|JsonResponse
+    {
+        /*if (auth()->user()->cannot('delete', $benefit)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
+        $benefit->delete();
+
+        return response()->noContent();
     }
 }

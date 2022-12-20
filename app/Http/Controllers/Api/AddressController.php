@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\V1\AddressesFilter;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\AddressResource;
 use App\Http\Resources\AddressCollection;
 use App\Http\Requests\AddressStoreRequest;
@@ -17,58 +21,94 @@ class AddressController extends Controller
     {
         $this->authorizeResource(Address::class, 'address');
     }
-
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Http\Resources\AddressCollection
+     * Affiche la liste des adresses
+     *
+     * @param Request $request
+     * @return AddressCollection
+     * @throws \JsonException
+     *
+     * @apiResourceCollection App\Http\Resources\AddressCollection
+     * @apiResourceModel App\Models\Address
      */
-    public function index(Request $request)
+    public function index(Request $request): AddressCollection
     {
-        $addresses = Address::all();
+        $filter = new AddressesFilter();
+        $queryItems = $filter->transform($request);
 
-        return new AddressCollection($addresses);
+        if (count($queryItems) == 0) {
+            return new AddressCollection(Address::paginate());
+        } else {
+            return new AddressCollection(Address::where($queryItems)->paginate());
+        }
     }
 
     /**
-     * @param \App\Http\Requests\AddressStoreRequest $request
-     * @return \App\Http\Resources\AddressResource
+     * Crée une adresse
+     *
+     * @param AddressStoreRequest $request
+     * @return JsonResponse|AddressResource
+     *
      */
-    public function store(AddressStoreRequest $request)
+    public function store(AddressStoreRequest $request): JsonResponse|AddressResource
     {
+        /*if (auth()->user()->cannot('create', Address::class)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour créer cette ressource')], 403);
+        }*/
+
         $address = Address::create($request->validated());
 
         return new AddressResource($address);
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Address $address
-     * @return \App\Http\Resources\AddressResource
+     * Affiche le détail d’une adresse
+     *
+     * @param Request $request
+     * @param Address $address
+     * @return AddressResource
+     *
+     * @apiResource App\Http\Resources\AddressResource
+     * @apiResourceModel App\Models\Address
      */
-    public function show(Request $request, Address $address)
+    public function show(Request $request, Address $address): AddressResource
     {
         return new AddressResource($address);
     }
 
     /**
-     * @param \App\Http\Requests\AddressUpdateRequest $request
-     * @param \App\Models\Address $address
-     * @return \App\Http\Resources\AddressResource
+     * Modifie une adresse
+     *
+     * @param AddressUpdateRequest $request
+     * @param Address $address
+     * @return JsonResponse|AddressResource
+     *
      */
-    public function update(AddressUpdateRequest $request, Address $address)
+    public function update(AddressUpdateRequest $request, Address $address): JsonResponse|AddressResource
     {
+        /*if (auth()->user()->cannot('update', $address)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour mettre à jour cette ressource')], 403);
+        }*/
+
         $address->update($request->validated());
 
         return new AddressResource($address);
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Address $address
-     * @return \Illuminate\Http\Response
+     * Supprime une adresse
+     *
+     * @param Request $request
+     * @param Address $address
+     * @return JsonResponse|Response
+     *
      */
-    public function destroy(Request $request, Address $address)
+    public function destroy(Request $request, Address $address): Response|JsonResponse
     {
+        /*if (auth()->user()->cannot('delete', $address)) {
+            return response()->json(['message' => __('Vous n’avez pas les autorisations pour supprimer cette ressource')], 403);
+        }*/
+
         $address->delete();
 
         return response()->noContent();

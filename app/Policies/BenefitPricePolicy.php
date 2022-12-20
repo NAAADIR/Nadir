@@ -18,7 +18,7 @@ class BenefitPricePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class BenefitPricePolicy
      */
     public function view(User $user, BenefitPrice $benefitPrice)
     {
-        //
+        return true;
     }
 
     /**
