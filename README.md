@@ -50,33 +50,33 @@ DB_PASSWORD=
    
    <div class="highlight highlight-source-json notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="[
     {
-        &quot;username&quot;: &quot;User&quot;,
+        &quot;username&quot;: &quot;user&quot;,
         &quot;email&quot;: &quot;user@exemple.com&quot;,
         &quot;password&quot;: &quot;useruser&quot;
     },
     {
-        &quot;username&quot;: &quot;Admin&quot;,
+        &quot;username&quot;: &quot;admin&quot;,
         &quot;email&quot;: &quot;admin@admin.com&quot;,
         &quot;password&quot;: &quot;admin&quot;
     },
     {
-        &quot;username&quot;: &quot;SuperAdmin&quot;,
+        &quot;username&quot;: &quot;superadmin&quot;,
         &quot;email&quot;: &quot;superadmin@admin.com&quot;,
         &quot;password&quot;: &quot;superadmin&quot;
     }
 ]"><pre>[
     {
-        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>User<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>user@exemple.com<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>useruser<span class="pl-pds">"</span></span>
     },
     {
-        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>Admin<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>admin<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>admin@admin.com<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>admin<span class="pl-pds">"</span></span>
     },
     {
-        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>SuperAdmin<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>superadmin<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>superadmin@admin.com<span class="pl-pds">"</span></span>,
         <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>superadmin<span class="pl-pds">"</span></span>
     }
