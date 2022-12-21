@@ -13,12 +13,11 @@
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require laravel/passport</pre></div>
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan passport:install</pre></div>
 
-<div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="public function run() 
-{
-    foreach(config('seeders.addresses') as $address) {
-        Address::create($address);
-    }
-}"></div>
+<div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="if (env('APP_DEBUG')) {
+ $app-&gt;register(Barryvdh\Debugbar\LumenServiceProvider::class);
+}"><pre><span class="pl-k">if</span> (env(<span class="pl-s">'APP_DEBUG'</span>)) {
+ <span class="pl-s1"><span class="pl-c1">$</span>app</span>-&gt;<span class="pl-en">register</span>(<span class="pl-v">Barryvdh</span>\<span class="pl-v">Debugbar</span>\<span class="pl-v">LumenServiceProvider</span>::class);
+}</pre></div>
 
 
 <p dir="auto">Compléter le fichier .env :</p>
