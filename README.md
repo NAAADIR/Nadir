@@ -19,3 +19,4 @@
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require --dev laravel-shift/blueprint</pre></div>
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require --dev jasonmccreary/laravel-test-assertions</pre></div>
 <p dir="auto">Normalement, il y a un fichier <code>draft.yaml</code>qui permet de générer l'ensemble des composents.</p>
+<p dir="auto">Ensuite, lancez la commande : <code>php artisan blueprint:build</code> et faites un : <code>php artisan migrate</code>.</p>
