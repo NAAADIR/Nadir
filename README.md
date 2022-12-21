@@ -27,8 +27,9 @@ DB_PASSWORD=
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require --dev jasonmccreary/laravel-test-assertions</pre></div>
 <p dir="auto">Normalement, il y a un fichier <code>draft.yaml</code>qui permet de générer l'ensemble des composents.</p>
 <p dir="auto">Ensuite, lancez la commande : <code>php artisan blueprint:build</code> et faites un : <code>php artisan migrate</code>.</p>
-<p dir="auto">Pour seeder l'application, le ficher <code>seeders.php</code> dans le dossier <code>config</code>vest nécessaire et ensuite effectuez la commande :</p>
-
+<p dir="auto">Pour seeder l'application, le ficher <code>seeders.php</code> dans le dossier <code>config</code>est nécessaire et ensuite effectuez la commande :</p>
+<p dir="auto">Vérifiez bien avant si l'ensemble des seeders est compléter comme cette exemple ci dessous (ici pour les adresses)</p>
+             
  <div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="public function run() 
 {
     foreach(config('seeders.addresses') as $address) {
@@ -40,6 +41,7 @@ DB_PASSWORD=
     }
 }</pre></div>            
 
+<p dir="auto">Ensuite, effectuez la commande suivante :</p>
    <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan migrate:fresh --seed</pre></div>
    
    
