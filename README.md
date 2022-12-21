@@ -35,8 +35,8 @@ DB_PASSWORD=
         Address::create($address);
     }
 }"><pre><span class="pl-k">public function run() {
-        </span>foreach(config(<span class="pl-s">'seeders.addresses'</span>) as $address) {
-    <span class="pl-s1"><span class="pl-c1">Address::create($address);</span>
+    </span>foreach(config(<span class="pl-s">'seeders.addresses'</span>) as $address) {
+        <span class="pl-s1"><span class="pl-c1">Address::create($address);</span>
     }
 }</pre></div>            
 
