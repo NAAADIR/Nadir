@@ -30,7 +30,7 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        if ($booking->user_id === $user->findId())
+        if ($booking->user_id === $user->id)
         {
             return true;
         }

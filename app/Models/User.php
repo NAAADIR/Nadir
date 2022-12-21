@@ -31,7 +31,7 @@ class User extends Authenticatable
         'image_path',
         'params',
         'preferences',
-        'is_admin',
+        'role',
     ];
 
     /**
@@ -55,7 +55,7 @@ class User extends Authenticatable
         'is_notifiable' => 'boolean',
         'params' => 'array',
         'preferences' => 'array',
-        'is_admin' => 'boolean',
+        'role' => 'enum',
     ];
 
     // relationships: 
