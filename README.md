@@ -13,12 +13,6 @@
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require laravel/passport</pre></div>
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan passport:install</pre></div>
 
-<div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="if (env('APP_DEBUG')) {
- $app-&gt;register(Barryvdh\Debugbar\LumenServiceProvider::class);
-}"><pre><span class="pl-k">if</span> (env(<span class="pl-s">'APP_DEBUG'</span>)) {
- <span class="pl-s1"><span class="pl-c1">$</span>app</span>-&gt;<span class="pl-en">register</span>(<span class="pl-v">Barryvdh</span>\<span class="pl-v">Debugbar</span>\<span class="pl-v">LumenServiceProvider</span>::class);
-}</pre></div>
-
 
 <p dir="auto">Compléter le fichier .env :</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="DB_USERNAME=
@@ -35,6 +29,11 @@ DB_PASSWORD=
 <p dir="auto">Ensuite, lancez la commande : <code>php artisan blueprint:build</code> et faites un : <code>php artisan migrate</code>.</p>
 <p dir="auto">Pour seeder l'application, le ficher <code>seeders.php</code> dans le dossier <code>config</code>vest nécessaire et ensuite effectuez la commande :</p>
 
+ <div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="if (env('APP_DEBUG')) {
+ $app-&gt;register(Barryvdh\Debugbar\LumenServiceProvider::class);
+}"><pre><span class="pl-k">if</span> (env(<span class="pl-s">'APP_DEBUG'</span>)) {
+ <span class="pl-s1"><span class="pl-c1">$</span>app</span>-&gt;<span class="pl-en">register</span>(<span class="pl-v">Barryvdh</span>\<span class="pl-v">Debugbar</span>\<span class="pl-v">LumenServiceProvider</span>::class);
+}</pre></div>            
 
    <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan migrate:fresh --seed</pre></div>
    
