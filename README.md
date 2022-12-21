@@ -28,3 +28,35 @@ DB_PASSWORD=
 <p dir="auto">Ensuite, lancez la commande : <code>php artisan blueprint:build</code> et faites un : <code>php artisan migrate</code>.</p>
 <p dir="auto">Pour seeder l'application, le ficher <code>seeders.php</code> dans le dossier <code>config</code>vest nécessaire et ensuite effectuez la commande :</p>
    <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan migrate:fresh --seed</pre></div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <div class="highlight highlight-source-json notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="[
+    {
+        &quot;firstname&quot;: &quot;User&quot;,
+        &quot;lastname&quot;: &quot;One&quot;,
+        &quot;email&quot;: &quot;user.one@your-project.com&quot;
+    },
+    {
+        &quot;firstname&quot;: &quot;User&quot;,
+        &quot;lastname&quot;: &quot;Two&quot;,
+        &quot;email&quot;: &quot;user.two@your-project.com&quot;
+    }
+]"><pre>[
+    {
+        <span class="pl-ent">"firstname"</span>: <span class="pl-s"><span class="pl-pds">"</span>User<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"lastname"</span>: <span class="pl-s"><span class="pl-pds">"</span>One<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>user.one@your-project.com<span class="pl-pds">"</span></span>
+    },
+    {
+        <span class="pl-ent">"firstname"</span>: <span class="pl-s"><span class="pl-pds">"</span>User<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"lastname"</span>: <span class="pl-s"><span class="pl-pds">"</span>Two<span class="pl-pds">"</span></span>,
+        <span class="pl-ent">"email"</span>: <span class="pl-s"><span class="pl-pds">"</span>user.two@your-project.com<span class="pl-pds">"</span></span>
+    }
+]</pre></div>
