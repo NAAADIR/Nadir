@@ -34,8 +34,9 @@ DB_PASSWORD=
     foreach(config('seeders.addresses') as $address) {
         Address::create($address);
     }
-}"><pre><span class="pl-k">public function run() {</span>foreach(config(<span class="pl-s">'seeders.addresses'</span>) as $address) {
-                                                                                          <span class="pl-s1"><span class="pl-c1">Address::create($address);</span>
+}"><pre><span class="pl-k">public function run() {
+</span>foreach(config(<span class="pl-s">'seeders.addresses'</span>) as $address) {
+<span class="pl-s1"><span class="pl-c1">Address::create($address);</span>
 }</pre></div>            
 
    <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan migrate:fresh --seed</pre></div>
