@@ -13,6 +13,14 @@
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>composer require laravel/passport</pre></div>
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan passport:install</pre></div>
 
+<div class="highlight highlight-text-html-php notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="public function run() 
+{
+    foreach(config('seeders.addresses') as $address) {
+        Address::create($address);
+    }
+}"><pre><span class="pl-v"></div>
+
+
 <p dir="auto">Compléter le fichier .env :</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="DB_USERNAME=
 DB_PASSWORD=><pre lang="text" class="notranslate"><code>DB_USERNAME=
@@ -27,6 +35,8 @@ DB_PASSWORD=
 <p dir="auto">Normalement, il y a un fichier <code>draft.yaml</code>qui permet de générer l'ensemble des composents.</p>
 <p dir="auto">Ensuite, lancez la commande : <code>php artisan blueprint:build</code> et faites un : <code>php artisan migrate</code>.</p>
 <p dir="auto">Pour seeder l'application, le ficher <code>seeders.php</code> dans le dossier <code>config</code>vest nécessaire et ensuite effectuez la commande :</p>
+
+
    <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="composer install"><pre>php artisan migrate:fresh --seed</pre></div>
    
    
