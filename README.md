@@ -15,8 +15,7 @@
 
 <p dir="auto">Compléter le fichier .env :</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="DB_USERNAME=
-DB_PASSWORD=><pre lang="text" class="notranslate"><code>
-DB_USERNAME=
+DB_PASSWORD=><pre lang="text" class="notranslate"><code>DB_USERNAME=
 DB_PASSWORD=
 </code></pre></div>                                                
 
