@@ -18,7 +18,7 @@
     foreach(config('seeders.addresses') as $address) {
         Address::create($address);
     }
-}"><pre><span class="pl-v"></div>
+}"></div>
 
 
 <p dir="auto">Compléter le fichier .env :</p>
