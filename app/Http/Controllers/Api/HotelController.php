@@ -21,6 +21,32 @@ class HotelController extends Controller
     {
         $this->authorizeResource(Hotel::class, 'address');
     }
+
+    public function search(Request $request)
+{
+    
+    $name = $request->input('name');
+    $rate = $request->input('rate');
+
+    $query = Hotel::query();
+
+    if ($name) {
+        $query->where(function ($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
+            $query->orWhere('street', 'like', "%$name%");
+            $query->orWhere('postcode', 'like', "%$name%");
+        });
+    }
+
+    if ($rate) {
+        $query->whereHas('hotelClass', function ($query) use ($rate) {
+            $query->where('star_rating', 'like', $rate);
+        });
+    }
+
+    $hotels = $query->get();
+    return response()->json($hotels);
+}
     /**
      * Affiche la liste des hotêls
      *

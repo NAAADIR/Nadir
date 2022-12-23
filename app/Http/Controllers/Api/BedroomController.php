@@ -21,6 +21,37 @@ class BedroomController extends Controller
     {
         $this->authorizeResource(Bedroom::class, 'address');
     }
+
+    public function search(Request $request) {
+        $name = $request->input('name');
+        $nameHotel = $request->input('nameHotel');
+        $type = $request->input('type');
+
+        $query = Bedroom::query();
+
+        if ($name) {
+            $query->where(function ($query) use ($name) {
+                $query->where('name', 'like', "%$name%");
+                $query->orWhere('price', 'like', "%$name%");
+            });
+        }
+
+        if ($nameHotel) {
+            $query->whereHas('hotel', function ($query) use ($nameHotel) {
+                $query->where('hotels.name', 'like', "%$nameHotel%");
+            });
+        }
+
+        if ($type) {
+            $query->whereHas('bedroomType', function ($query) use ($type) {
+                $query->where('bedroomType.name', 'like', "%$type%");
+            });
+        }
+
+        $bedrooms = $query->get();
+        return response()->json($bedrooms);
+
+    }
     /**
      * Affiche la liste des chambres
      *

@@ -35,4 +35,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
     Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);
 });
 
+Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
+Route::get('hotels', [App\Http\Controllers\Api\HotelController::class, 'index']);
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);
+Route::get('bedrooms', [App\Http\Controllers\Api\BedroomController::class, 'index']);
+
 
