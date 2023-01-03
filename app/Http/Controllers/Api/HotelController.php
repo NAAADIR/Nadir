@@ -19,7 +19,7 @@ class HotelController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Hotel::class, 'address');
+        $this->authorizeResource(Hotel::class, 'hotel');
     }
 
     public function search(Request $request)

@@ -32,7 +32,7 @@ return new class extends Migration
             $table->json('params')->nullable();
             $table->json('preferences')->nullable();
             $table->enum('role', ['superadmin', 'admin', 'user']);
-            $table->foreignId('address_id')->constrained()->nullable();
+            $table->foreignId('address_id')->nullable()->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

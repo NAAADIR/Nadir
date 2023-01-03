@@ -19,7 +19,7 @@ class BedroomController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Bedroom::class, 'address');
+        $this->authorizeResource(Bedroom::class, 'bedroom');
     }
 
     public function search(Request $request) {

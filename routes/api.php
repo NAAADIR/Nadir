@@ -33,6 +33,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
     Route::apiResource('payment-types', App\Http\Controllers\Api\PaymentTypeController::class);
     Route::apiResource('addresses', App\Http\Controllers\Api\AddressController::class);
     Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);
+    Route::get('/send-email', [App\Http\Controllers\Api\UserController::class, 'sendEmail']);
 });
 
 Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);

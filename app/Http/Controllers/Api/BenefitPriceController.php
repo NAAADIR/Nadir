@@ -19,7 +19,7 @@ class BenefitPriceController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(BenefitPrice::class, 'address');
+        $this->authorizeResource(BenefitPrice::class, 'benefitPrice');
     }
     /**
      * Affiche la liste des prix des bénéfits

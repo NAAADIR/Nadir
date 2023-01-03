@@ -19,7 +19,7 @@ class BookingController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Booking::class, 'address');
+        $this->authorizeResource(Booking::class, 'booking');
     }
     /**
      * Affiche la liste des reservations

@@ -19,7 +19,7 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Payment::class, 'address');
+        $this->authorizeResource(Payment::class, 'payment');
     }
     /**
      * Affiche la liste des types de paiements

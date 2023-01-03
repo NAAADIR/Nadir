@@ -33,10 +33,10 @@ class BookingResource extends Resource
             ->schema([
                 Card::make()->schema([
                     Select::make('user_id')
-                        ->relationship('user', 'name')
+                        ->relationship('user', 'lastname')
                         ->required(),
                     Select::make('bedroom_id')
-                        ->relationship('bedrooms', 'name')
+                        ->relationship('bedrooms', 'id')
                         ->required(),
                     Select::make('payment_id')
                         ->relationship('payment', 'creditCardName')
@@ -60,11 +60,11 @@ class BookingResource extends Resource
             ->columns([
                 TextColumn::make('id')
                     ->sortable(),
-                TextColumn::make('user.name')
+                TextColumn::make('user.lastname')
                     ->sortable(),
                 TextColumn::make('payment.creditCardName')
                     ->sortable(),
-                TextColumn::make('bedroom.name')
+                TextColumn::make('bedroom_booking.bedroom_id')
                     ->sortable(),
                 TextColumn::make('start_at')
                     ->dateTime(),

@@ -206,7 +206,6 @@ return [
 
     'addresses' => [
         [
-            'name' => '',
             'street' => '2 Rue du Soleil',
             'complement1' => '',
             'complement2' => '',
@@ -216,7 +215,6 @@ return [
             'country_id' => 58,
         ],
         [
-            'name' => '',
             'street' => '2 Rue du Nuage',
             'complement1' => '',
             'complement2' => '',
@@ -226,7 +224,6 @@ return [
             'country_id' => 58,
         ],
         [
-            'name' => '',
             'street' => '110 Impasse Valteline',
             'complement1' => '',
             'complement2' => '',
@@ -236,7 +233,6 @@ return [
             'country_id' => 58,
         ],
         [
-            'name' => '',
             'street' => '15 Rue de Lyon',
             'complement1' => '',
             'complement2' => '',
@@ -246,7 +242,6 @@ return [
             'country_id' => 58,
         ],
         [
-            'name' => '',
             'street' => '2 Rue du General',
             'complement1' => '',
             'complement2' => '',
@@ -256,7 +251,6 @@ return [
             'country_id' => 58,
         ],
         [
-            'name' => '',
             'street' => '',
             'complement1' => '',
             'complement2' => '',
@@ -284,7 +278,63 @@ return [
             'image' => '',
             'bedroom_type_id' => 2,
             'hotel_id' => 2,
-        ],   
+        ], 
+        [
+            'name' => 'Nuit de rêve',
+            'phone_bedroom' => '0123456789',
+            'price' => '150',
+            'image' => '',
+            'bedroom_type_id' => 3,
+            'hotel_id' => 2,
+        ],
+        [
+            'name' => 'Nuit de folie',
+            'phone_bedroom' => '9876543210',
+            'price' => '180',
+            'image' => '',
+            'bedroom_type_id' => 4,
+            'hotel_id' => 2,
+        ],
+        [
+            'name' => 'Voyage dans le temps',
+            'phone_bedroom' => '0123456789',
+            'price' => '210',
+            'image' => '',
+            'bedroom_type_id' => 5,
+            'hotel_id' => 5,
+        ],
+        [
+            'name' => 'Journée de rêve',
+            'phone_bedroom' => '9876543210',
+            'price' => '240',
+            'image' => '',
+            'bedroom_type_id' => 6,
+            'hotel_id' => 1,
+        ],
+        [
+            'name' => 'Histoire de famille',
+            'phone_bedroom' => '0123456789',
+            'price' => '270',
+            'image' => '',
+            'bedroom_type_id' => 7,
+            'hotel_id' => 2,
+        ],
+        [
+            'name' => 'Instant de bonheur',
+            'phone_bedroom' => '9876543210',
+            'price' => '300',
+            'image' => '',
+            'bedroom_type_id' => 8,
+            'hotel_id' => 1,
+        ],
+        [
+            'name' => 'Odyssée',
+            'phone_bedroom' => '0123456789',
+            'price' => '330',
+            'image' => '',
+            'bedroom_type_id' => 7,
+            'hotel_id' => 2,
+        ],
     ],
 
     'bedroom_types' => [
@@ -324,7 +374,7 @@ return [
         [
             'name' => 'Chambre Quadruple Familiale.',
             'description' => 'Chambre quadruple familiale d\'une superficie de 15 m².
-                Cette chambre dispose d\'une salle de bains privative, d\'une télévision à écran LCD, d\'un téléphone et d\'une connexion Wi-Fi gratuite.',
+                Cette chambre dispose d\'une salle de bains privative, d\'une télévision à écran LeCD, d\'un téléphone et d\'une connexion Wi-Fi gratuite.',
         ],
     ],
 
@@ -506,6 +556,7 @@ return [
             'amount' => '500',
             'user_id' => 1,
             'payment_id' => 1,
+            'bedroom_id' => 1,
         ],
         [
             'start_at' => '07/01/22',
@@ -514,6 +565,7 @@ return [
             'amount' => '200',
             'user_id' => 2,
             'payment_id' => 2,
+            'bedroom_id' => 2,
         ],
     ],
 

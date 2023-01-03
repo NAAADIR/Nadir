@@ -55,7 +55,6 @@ class User extends Authenticatable
         'is_notifiable' => 'boolean',
         'params' => 'array',
         'preferences' => 'array',
-        'role' => 'enum',
     ];
 
     // relationships: 

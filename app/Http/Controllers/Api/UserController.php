@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
+
+use App\Mail\ExampleMail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Mail\Mailer;
 
 class UserController extends Controller
 {
 
     public function __construct()
     {
-        $this->authorizeResource(User::class, 'address');
+        $this->authorizeResource(User::class, 'user');
     }
+
+    public function sendEmail(Mailer $mailer)
+{
+    $mailer->to('hello@example.com')
+            ->send(new ExampleMail());
+}
+
     /**
      * Display a listing of the resource.
      *

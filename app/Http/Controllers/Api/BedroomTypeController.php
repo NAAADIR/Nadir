@@ -19,7 +19,7 @@ class BedroomTypeController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(BedroomType::class, 'address');
+        $this->authorizeResource(BedroomType::class, 'bedroomType');
     }
     /**
      * Affiche la liste des types de chambres

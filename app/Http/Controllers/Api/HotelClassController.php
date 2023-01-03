@@ -17,9 +17,10 @@ use App\Http\Requests\HotelClassUpdateRequest;
 class HotelClassController extends Controller
 {
 
+
     public function __construct()
     {
-        $this->authorizeResource(HotelClass::class, 'address');
+        $this->authorizeResource(HotelClass::class, 'hotelClass');
     }
     /**
      * Affiche la liste des classes d'hôtels

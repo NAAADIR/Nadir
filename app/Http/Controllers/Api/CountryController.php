@@ -19,7 +19,7 @@ class CountryController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Country::class, 'address');
+        $this->authorizeResource(Country::class, 'country');
     }
     /**
      * Affiche la liste des pays

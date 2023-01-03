@@ -10,17 +10,18 @@ use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Resources\Pages\Page;
 use Filament\Forms\Components\Card;
+use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Tables\Columns\BooleanColumn;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
-use Filament\Tables\Columns\BooleanColumn;
-use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -33,22 +34,22 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Card::make()->schema([
-                    TextInput::make('name')
+                    Select::make('address_id')
+                        ->relationship('address', 'street')
+                        ->required(),
+                    TextInput::make('lastname')
                         ->required()
                         ->maxLength(255),
-                    TextInput::make('first_name')
+                    TextInput::make('firstname')
                         ->required()
                         ->maxLength(255),
-                    TextInput::make('address')
+                    TextInput::make('username')
                         ->required()
                         ->maxLength(255),
-                    TextInput::make('city')
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('postcode')
+                    TextInput::make('gender')
                         ->required()
                         ->maxLength(5),
-                    TextInput::make('country')
+                    TextInput::make('phone_office')
                         ->required()
                         ->maxLength(255),
                     TextInput::make('phone_mobile')
@@ -64,8 +65,9 @@ class UserResource extends Resource
                         ->minLength(8)
                         ->dehydrated(fn ($state) => filled($state))
                         ->dehydrateStateUsing(fn ($state) => Hash::make($state)),
-                    Toggle::make('is_admin')
+                    TextInput::make('role')
                         ->required(),
+                        
                 ])
             ]);
     }
@@ -76,18 +78,20 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('id')
                     ->sortable(),
-                TextColumn::make('name')
+                TextColumn::make('address.street')
                     ->sortable(),
+                TextColumn::make('lastname')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('firstname')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('address')
+                TextColumn::make('username')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('gender')
                     ->sortable(),
-                TextColumn::make('city')
-                    ->sortable(),
-                TextColumn::make('postcode')
-                    ->sortable(),
-                TextColumn::make('country')
+                TextColumn::make('phone_office')
                     ->sortable(),
                 TextColumn::make('phone_mobile')
                     ->sortable(),
@@ -95,9 +99,11 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('password')
                     ->sortable(),
-                BooleanColumn::make('is_admin'),
+                TextColumn::make('role')
+                    ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime(),
+                
             ])
             ->filters([
                 //
