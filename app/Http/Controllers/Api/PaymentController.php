@@ -13,6 +13,7 @@ use App\Http\Resources\PaymentResource;
 use App\Http\Resources\PaymentCollection;
 use App\Http\Requests\PaymentStoreRequest;
 use App\Http\Requests\PaymentUpdateRequest;
+use Illuminate\Support\Facades\Hash;
 
 class PaymentController extends Controller
 {

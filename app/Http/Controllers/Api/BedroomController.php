@@ -48,8 +48,9 @@ class BedroomController extends Controller
             });
         }
 
+        $query->with('bedroomType')->get();
         $bedrooms = $query->get();
-        return response()->json($bedrooms);
+        return new BedroomCollection($bedrooms);
 
     }
     /**
@@ -70,7 +71,8 @@ class BedroomController extends Controller
         if (count($queryItems) == 0) {
             return new BedroomCollection(Bedroom::paginate());
         } else {
-            return new BedroomCollection(Bedroom::where($queryItems)->paginate());
+            //return new BedroomCollection(Bedroom::where($queryItems)->with('bedroomType')->paginate());
+            return Bedroom::where($queryItems)->with('bedroomType')->paginate();
         }
     }
 
@@ -88,7 +90,6 @@ class BedroomController extends Controller
         }*/
 
         $bedroom = Bedroom::create($request->validated());
-
         return new BedroomResource($bedroom);
     }
 
@@ -122,7 +123,6 @@ class BedroomController extends Controller
         }*/
 
         $bedroom->update($request->validated());
-
         return new BedroomResource($bedroom);
     }
 
@@ -141,7 +141,6 @@ class BedroomController extends Controller
         }*/
 
         $bedroom->delete();
-
         return response()->noContent();
     }
 }
