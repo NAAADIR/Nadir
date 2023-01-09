@@ -130,3 +130,27 @@ DB_PASSWORD=
     Route::post('register', [\App\Http\Controllers\Api\RegisterController::class, 'register'])->name('register');
     Route::post('login', [\App\Http\Controllers\Api\RegisterController::class, 'login'])->name('login');   
 });</pre></div>
+
+<p>Méthode CRUD dans l'ensemble de mes modèles</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="Route::apiResource('bedrooms', App\Http\Controllers\Api\BedroomController::class);
+    Route::apiResource('bedroom-types', App\Http\Controllers\Api\BedroomTypeController::class);
+    Route::apiResource('benefits', App\Http\Controllers\Api\BenefitController::class);
+    Route::apiResource('benefit-prices', App\Http\Controllers\Api\BenefitPriceController::class);
+    Route::apiResource('bookings', App\Http\Controllers\Api\BookingController::class);
+    Route::apiResource('hotels', App\Http\Controllers\Api\HotelController::class);
+    Route::apiResource('hotel-class', App\Http\Controllers\Api\HotelClassController::class);
+    Route::apiResource('payments', App\Http\Controllers\Api\PaymentController::class);
+    Route::apiResource('payment-types', App\Http\Controllers\Api\PaymentTypeController::class);
+    Route::apiResource('addresses', App\Http\Controllers\Api\AddressController::class);
+    Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);"><pre>Route::apiResource('bedrooms', App\Http\Controllers\Api\BedroomController::class);
+    Route::apiResource('bedroom-types', App\Http\Controllers\Api\BedroomTypeController::class);
+    Route::apiResource('benefits', App\Http\Controllers\Api\BenefitController::class);
+    Route::apiResource('benefit-prices', App\Http\Controllers\Api\BenefitPriceController::class);
+    Route::apiResource('bookings', App\Http\Controllers\Api\BookingController::class);
+    Route::apiResource('hotels', App\Http\Controllers\Api\HotelController::class);
+    Route::apiResource('hotel-class', App\Http\Controllers\Api\HotelClassController::class);
+    Route::apiResource('payments', App\Http\Controllers\Api\PaymentController::class);
+    Route::apiResource('payment-types', App\Http\Controllers\Api\PaymentTypeController::class);
+    Route::apiResource('addresses', App\Http\Controllers\Api\AddressController::class);
+    Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);</pre></div>
+
