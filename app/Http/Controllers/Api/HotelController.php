@@ -44,7 +44,7 @@ class HotelController extends Controller
         });
     }
 
-    $hotels = $query->get();
+    $hotels = $query->with('hotelClass')->get();
     return response()->json($hotels);
 }
     /**

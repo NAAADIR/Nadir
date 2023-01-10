@@ -25,6 +25,8 @@ class BedroomResource extends JsonResource
             'benefits' => BenefitCollection::make($this->whenLoaded('benefits')),
             'bookings' => BookingCollection::make($this->whenLoaded('bookings')),
             'bedroom_type' => BedroomTypeResource::make($this->whenLoaded('bedroomType')),
+            'hotel' => HotelResource::make($this->whenLoaded('hotel')),
+            'hotel_class' => HotelClassResource::make($this->whenLoaded('hotelClass')),
         ];
     }
 }

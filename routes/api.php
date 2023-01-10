@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route pour se connecter côté API avec Laravel Passport
+
 Route::group(['prefix' => 'v1'], function (){
     Route::post('register', [\App\Http\Controllers\Api\RegisterController::class, 'register'])->name('register');
-    Route::post('login', [\App\Http\Controllers\Api\RegisterController::class, 'login'])->name('login');   
+    Route::post('login', [\App\Http\Controllers\Api\RegisterController::class, 'login'])->name('login'); 
 });
+
+
+// Route CRUD côté API avec les droits effectué dans les policies.
 
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
 
@@ -36,9 +41,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
     Route::get('/send-email', [App\Http\Controllers\Api\UserController::class, 'sendEmail']);
 });
 
+// Route pour effectuer des recherches en fonction du nom et etc.. voir méthode du controlleur 
+
 Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
-Route::get('hotels', [App\Http\Controllers\Api\HotelController::class, 'index']);
-Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);
-Route::get('bedrooms', [App\Http\Controllers\Api\BedroomController::class, 'index']);
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']); 
 
 

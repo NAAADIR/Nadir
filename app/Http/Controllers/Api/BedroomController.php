@@ -43,12 +43,14 @@ class BedroomController extends Controller
         }
 
         if ($type) {
-            $query->whereHas('bedroomType', function ($query) use ($type) {
-                $query->where('bedroomType.name', 'like', "%$type%");
-            });
+            $query->join('bedroom_types', 'bedrooms.bedroom_type_id', '=', 'bedroom_types.id')
+                ->where('bedroom_types.name', 'like', "%$type%");
         }
 
-        $query->with('bedroomType')->get();
+        $query->with(['bedroomType', 'hotel' => 
+        function($query){
+            $query->with('hotelClass');
+        }])->paginate();
         $bedrooms = $query->get();
         return new BedroomCollection($bedrooms);
 
@@ -71,8 +73,8 @@ class BedroomController extends Controller
         if (count($queryItems) == 0) {
             return new BedroomCollection(Bedroom::paginate());
         } else {
-            //return new BedroomCollection(Bedroom::where($queryItems)->with('bedroomType')->paginate());
-            return Bedroom::where($queryItems)->with('bedroomType')->paginate();
+            return new BedroomCollection(Bedroom::where($queryItems)->with('bedroomType', 'hotel')->paginate());
+            //return Bedroom::where($queryItems)->with('bedroomType')->paginate();
         }
     }
 
