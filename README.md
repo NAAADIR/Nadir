@@ -156,4 +156,7 @@ DB_PASSWORD=
 
 <p>Route pour faire des recherches filtrées dans l'ensemble des modèles Hotel et Bedroom</p>
 <div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
-Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);</pre></div>
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);<pre>
+Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);
+                                                                                                                                          </pre></div>
