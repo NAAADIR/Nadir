@@ -154,3 +154,8 @@ DB_PASSWORD=
     Route::apiResource('addresses', App\Http\Controllers\Api\AddressController::class);
     Route::apiResource('countries', App\Http\Controllers\Api\CountryController::class);</pre></div>
 
+<p>Route pour faire des recherches filtrées dans l'ensemble des modèles Hotel et Bedroom</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);"><pre>
+Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
+Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);</pre></div>
