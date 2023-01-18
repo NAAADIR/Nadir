@@ -18,7 +18,7 @@ class CreateHotelClassesTable extends Migration
         Schema::create('hotel_classes', function (Blueprint $table) {
             $table->id();
             $table->string('star_rating')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 

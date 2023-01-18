@@ -496,24 +496,24 @@ return [
     'hotel_classes' => [
         [
             'star_rating' => '*****',
-            'description' => '',
+            'description' => 'L\'hôtel 5 étoiles offre des chambres luxueuses, un spa haut de gamme, des restaurants gastronomiques, une piscine extérieure, un service de conciergerie et un emplacement privilégié en plein cœur de la ville. Des vacances inoubliables vous attendent dans ce palace prestigieux.',
         ],
         [
             'star_rating' => '****',
-            'description' => '',
+            'description' => 'L\'hôtel 4 étoiles propose des chambres confortables et modernes, une piscine intérieure, un restaurant gastronomique, un bar, une salle de fitness, un service de conciergerie et un emplacement pratique à proximité des principales attractions. Un séjour confortable et agréable vous attend dans cet hôtel 4 étoiles de qualité.',
         ],   
         [
             'star_rating' => '***',
-            'description' => '',
+            'description' => 'L\'hôtel 3 étoiles offre des chambres confortables avec toutes les commodités nécessaires, un petit déjeuner buffet, un emplacement central, un accès facile aux transports en commun, un service de réception 24h/24 et un personnel accueillant pour assister les clients. Un séjour économique et pratique dans cet hôtel 3 étoiles.',
         ],
         [
             'star_rating' => '**',
-            'description' => '',
+            'description' => 'L\'hôtel 2 étoiles propose des chambres simples mais propres, un service de réception ouvert 24h/24, une salle de bain commune, une proximité avec les transports en commun, un petit déjeuner simple et un tarif abordable. C\'est une solution économique pour les voyageurs à la recherche d\'un hébergement basique.',
         ],
         [
             'star_rating' => '*',
-            'description' => '',
-        ]
+            'description' => 'L\'hôtel 1 étoile offre des chambres modestes et élémentaires, avec des équipements de base tels que des lits confortables, des fenêtres, une salle de bain commune, un service de réception ouvert 24h/24 et un tarif très abordable. Il s\'agit d\'une option économique pour les voyageurs à la recherche d\'un hébergement de base.',
+        ],
     ],
 
     'payments' => [
@@ -535,6 +535,51 @@ return [
             'end_at' => '02/01/2022',
             'payment_type_id' => 2,
         ],
+        [
+            'creditCardName' => 'User C',
+            'creditCardNumber' => '3456 7897 1234 5678',
+            'creditCardExpirationDate' => '01/01/2023',
+            'cvv' => '345',
+            'start_at' => '01/01/2022',
+            'end_at' => '02/01/2022',
+            'payment_type_id' => 3,
+        ],
+        [
+            'creditCardName' => 'User D',
+            'creditCardNumber' => '1234 5678 9876 5432',
+            'creditCardExpirationDate' => '01/02/2025',
+            'cvv' => '123',
+            'start_at' => '01/01/2022',
+            'end_at' => '02/01/2022',
+            'payment_type_id' => 3,
+        ],
+        [
+            'creditCardName' => 'User E',
+            'creditCardNumber' => '9876 5432 3456 7897',
+            'creditCardExpirationDate' => '05/05/2027',
+            'cvv' => '234',
+            'start_at' => '01/01/2022',
+            'end_at' => '02/01/2022',
+            'payment_type_id' => 1,
+        ],
+        [
+            'creditCardName' => 'User F',
+            'creditCardNumber' => '3456 7897 1234 5678',
+            'creditCardExpirationDate' => '01/01/2023',
+            'cvv' => '345',
+            'start_at' => '01/01/2022',
+            'end_at' => '02/01/2022',
+            'payment_type_id' => 2,
+        ],
+        [
+            'creditCardName' => 'User G',
+            'creditCardNumber' => '1234 5678 9876 5432',
+            'creditCardExpirationDate' => '01/02/2025',
+            'cvv' => '123',
+            'start_at' => '01/01/2022',
+            'end_at' => '02/01/2022',
+            'payment_type_id' => 3,
+        ],
     ],
 
     'payment_types' => [
@@ -546,6 +591,15 @@ return [
             'name' => 'Master Card',
             'code' => 'MC'
         ],
+        [
+            'name' => 'Visa',
+            'code' => 'VISA'
+        ],
+        [
+            'name' => 'Paypal',
+            'code' => 'PP'
+        ],
+
     ],
 
     'bookings' => [
@@ -556,7 +610,7 @@ return [
             'amount' => '500',
             'user_id' => 1,
             'payment_id' => 1,
-            'bedroom_id' => 1,
+            'bedroom_id' => 2,
         ],
         [
             'start_at' => '07/01/22',
@@ -565,7 +619,7 @@ return [
             'amount' => '200',
             'user_id' => 2,
             'payment_id' => 2,
-            'bedroom_id' => 2,
+            'bedroom_id' => 3,
         ],
     ],
 

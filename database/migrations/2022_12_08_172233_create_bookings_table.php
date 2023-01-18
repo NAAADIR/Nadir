@@ -23,7 +23,7 @@ class CreateBookingsTable extends Migration
             $table->decimal('amount', 5, 2)->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('payment_id')->constrained();
-            // $table->foreignId('bedroom_id')->constrained();
+            $table->foreignId('bedroom_id')->constrained();
             $table->timestamps();
         });
 
