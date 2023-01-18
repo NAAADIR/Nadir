@@ -38,7 +38,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function (){
     Route::apiResource('payment-types', App\Http\Controllers\Api\V1\PaymentTypeController::class);
     Route::apiResource('addresses', App\Http\Controllers\Api\V1\AddressController::class);
     Route::apiResource('countries', App\Http\Controllers\Api\V1\CountryController::class);
+    Route::apiResource('users', App\Http\Controllers\Api\V1\UserController::class);
     Route::get('/send-email', [App\Http\Controllers\Api\V1\UserController::class, 'sendEmail']);
+    Route::post('/logout', [App\Http\Controllers\Api\V1\RegisterController::class, 'logout']);
 });
 
 // Route pour effectuer des recherches en fonction du nom et etc.. voir méthode du controlleur 
