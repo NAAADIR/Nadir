@@ -94,20 +94,24 @@ DB_PASSWORD=
 <tr>
 <th align="center">email</th>
 <th align="center">roles</th>
+<th align="center">permissions</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="center"><a href="mailto:user@exemple.com">user@exemple.com</a></td>
 <td align="center">user</td>
+<td align="center">index, show</td>
 </tr>
 <tr>
 <td align="center"><a href="mailto:admin@admin.com">admin@admin.com</a></td>
 <td align="center">user, admin</td>
+<td align="center">index, show, update</td>
 </tr>
 <tr>
 <td align="center"><a href="mailto:superadmin@admin.com">superadmin@admin.com</a></td>
 <td align="center">user, admin, superadmin</td>
+<td align="center">index, show, update, destroy</td>
 </tr>
 </tbody>
 </table>
