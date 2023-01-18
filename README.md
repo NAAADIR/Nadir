@@ -161,7 +161,7 @@ Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class
 Route::get('hotels/search', [App\Http\Controllers\Api\HotelController::class, 'search']);
 Route::get('bedrooms/search', [App\Http\Controllers\Api\BedroomController::class, 'search']);</pre></div>
 
-<p>J'ai aussi une méthode qui permet de chercher une donnée en fonction de la colonne (name, description...) en fonction de ce que l'on souhaite cherchher (eq = '=', ne = '!=', (pour des données chiffrés : 'lt' = '<', 'lte' = '<=', 'gt' = '>', 'gte' = '>=')
+<p>J'ai aussi une méthode qui permet de chercher une donnée en fonction de la colonne (name, description...) en fonction de ce que l'on souhaite cherchher (eq = '=', ne = '!=', (pour des données chiffrés : 'lt' = '<', 'lte' = '<=', 'gt' = '>', 'gte' = '>=') pour l'ensemble de mes modèles.
 Petit exemple sous Postman : 
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="http/.../v1/countries?name[eq]=France=><pre lang="text" class="notranslate"><code>http/.../v1/countries?name[eq]=France
 </code></pre></div>  
